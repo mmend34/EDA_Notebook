@@ -1,30 +1,45 @@
 ---
 title: "EDA Notebook"
-author: "Mariela Mendez"
+author: "Mariela Mendez, Hannah Huang"
 date: "2024-07-21"
 output: github_document
 ---
-
-```{r setup, include=FALSE}
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
-## R Markdown
+### Our Dataset and Research Question
+Our dataset comes from a survey from the Associaton of Religion Data Archives. This survey contains measures for examining the effect of spirituality on health. (more information). 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+#load dataset to RStudio from GitHub
+load("~/Downloads/EDA_Notebook-main/Datasets/CAM Original Dataset.RData")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+#create new name for dataset
+camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosity_Survey
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+#### Defining our data
+Now that we've uploaded our dataset, we can determine how large our dataset is and what variables we can narrow our focus to study. 
+```{r}
+nrow(camdata)
+ncol(camdata)
+## Our dataset consists of 130 responses to 258 variables!
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##### Cleaning our data
+We will create a new dataframe incorporating our variables of interest.
+```{r}
+## Creating camdata_clean
+camdata_clean <- select(camdata, c('belgdwth', 'prvtpry', 'relpersn', 'sprtprsn', 'DISTRS04', 'DISTRS11', 'DISTRS16', 'DISTRS23', 'DISTRS37', 'DISTRS53', 'gender', 'mrtlstus', 'denom'))
+str(camdata_clean)
+
+```
+
+#### Analysis
+```{r}
+
+
+```
