@@ -1,30 +1,48 @@
 ---
-title: "EDA Notebook"
-author: "Mariela Mendez"
-date: "2024-07-21"
+title: "Unveiling the Spiritual Connection to Health"
+author: "Mariela Mendez, Hannah Huang"
+date: "2024-07-25"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
 ```
 
-## R Markdown
+### Complementary and Alternative Medical (CAM) and Spirituality, Religiosity Survey
+The CAM and Spirituality, Religiosity survey was given to chronically ill patients who were randomly chosen from a patient database at a private medical clinic in Southampton, UK. To be a participant for the survey, individuals were required to (1) have recent treatment within the last three years, (2) have a diagnosis of either migraines, irritable bowel, or chronic fatigue syndrome, and (3) have an age greater than 18. Six hundred questionnaires were originally mailed to the patients, yet there was a response rate of 18.5%, with 111 successfully completed questionnaires. The survey aims to explore the impact of spirituality on health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The following data is sourced from the Association of Religion Data Archives, www.theARDA.com, and was collected by principal investigators Niko Kohls, Harald Walach, and George Lewish. The original data set consists of 254 variables and 111 participants, but for better understanding, the ARDA decided to add variables and responses to include 258 total variables and 130 respondents. However, for the purposes of this analysis, the variable count has been reduced to 13 variables. While this is a much shorter data set, the chosen variables create a more direct approach. A concise data set facilitates clearer interpretation of results without one being overwhelmed by excessive data. 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Motivation
+Understanding the relationship between spirituality and health is an important aspect in well-being. In medical environments, especially those dominated by Western medicine, spirituality's impact on health is often disregarded. With this data set, investigators are able to explore how spirituality affects various sectors of health and overall well-being. Via analysis, patterns or correlations can be linked. One could uncover whether certain spiritual practices or beliefs are associated with better mental health, reduced stress, or improved coping mechanisms. In return, these patterns are relevant to healthcare providers or therapists looking to integrate effective strategies into their treatments. Notably, findings could influence policies related to holistic healthcare approaches that acknowledge the role of spirituality in patient well-being.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+#load data set
+load("/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/CAM Original Dataset.RData")
+#create new name for data set
+camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosity_Survey
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+#### Defining our data
+Now that we've uploaded our data set, we can determine how large our dataset is and what variables we can narrow our focus to study. 
+# ```{r}
+nrow(camdata)
+ncol(camdata)
+## Our dataset consists of 130 responses to 258 variables!
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+##### Cleaning our data
+We will create a new dataframe incorporating our variables of interest.
+```{r}
+## Creating camdata_clean
+camdata_clean <- dplyr::select(camdata, c('belgdwth', 'prvtpry', 'relpersn', 'sprtprsn', 'DISTRS04', 'DISTRS11', 'DISTRS16', 'DISTRS23', 'DISTRS37', 'DISTRS53', 'gender', 'mrtlstus', 'denom'))
+str(camdata_clean)
+
+```
+
+#### Analysis
+```{r}
+
+
+```
