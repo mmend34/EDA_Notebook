@@ -16,6 +16,15 @@ The CAM and Spirituality, Religiosity survey was given to chronically ill patien
 ### Motivation
 Understanding the relationship between spirituality and health is an important aspect in well-being. In medical environments, especially those dominated by Western medicine, spirituality's impact on health is often disregarded. With this data set, investigators are able to explore how spirituality affects various sectors of health and overall well-being. Via analysis, patterns or correlations can be linked. One could uncover whether certain spiritual practices or beliefs are associated with better mental health, reduced stress, or improved coping mechanisms. In return, these patterns are relevant to healthcare providers or therapists looking to integrate effective strategies into their treatments. Notably, findings could influence policies related to holistic healthcare approaches that acknowledge the role of spirituality in patient well-being.
 
+<!-- ```{r}
+nrow(camdata)
+ncol(camdata)
+# Our data set consists of 130 responses to 258 variables!
+``` -->
+
+### Defining Variables
+The original data set consists of 130 responses to 258 variables! Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. For the first category, the variable *belgdwth* refers to the survey question "I believe in a God who watches over me", *prvtpry* refers to "How often do you pray privately in place?", *relpersn* refers to "to what extent do you consider yourself a religious person?", and *sprtprsn* refers to "to what extent do you consider yourself a spiritual person?". The health effects category contains both physical and psychological effects. These variables are *DISTRS11*: poor appetite, *DISTRS23*: nausea or upset stomach, *DISTRS37*: feeling weak in parts of your body, *DISTRS04*: feelings others are to blame for most of your troubles, *DISTRS16*: feeling lonely, *DISTRS53*: the idea that something is wrong with your mind. As for the personal data category, the variables chosen are *gender*: female or male, *mrtlstus*: marital status (single, married, divorced,  or widowed), and *denom*: denomination. COME BACK TO EXPLAIN REASONING FOR SELECTING THESE VARIABLES!!
+
 ```{r}
 #load data set
 load("/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/CAM Original Dataset.RData")
@@ -23,26 +32,60 @@ load("/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/CAM Original
 camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosity_Survey
 ```
 
-#### Defining our data
-Now that we've uploaded our data set, we can determine how large our dataset is and what variables we can narrow our focus to study. 
-# ```{r}
-nrow(camdata)
-ncol(camdata)
-## Our dataset consists of 130 responses to 258 variables!
-```
+### Cleaning The Data
+We will create a new data frame incorporating our variables of interest.
 
-
-##### Cleaning our data
-We will create a new dataframe incorporating our variables of interest.
 ```{r}
-## Creating camdata_clean
-camdata_clean <- dplyr::select(camdata, c('belgdwth', 'prvtpry', 'relpersn', 'sprtprsn', 'DISTRS04', 'DISTRS11', 'DISTRS16', 'DISTRS23', 'DISTRS37', 'DISTRS53', 'gender', 'mrtlstus', 'denom'))
-str(camdata_clean)
+#gives variable names and location
+names(camdata) 
 
-```
+#access to needed libraries
+library(haven)
+library(purrr)
+library(knitr)
 
-#### Analysis
+#variables are stored as labelled vectors in the original data set so it must be converted to a regular vector so commands like summary apply to the variable
+camdata <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) 
+camdata <- camdata %>% mutate(prvtpry = as_factor(prvtpry)) 
+camdata <- camdata %>% mutate(relpersn = as_factor(relpersn)) 
+camdata <- camdata %>% mutate(sprtprsn = as_factor(sprtprsn)) 
+camdata <- camdata %>% mutate(DISTRS04 = as_factor(DISTRS04)) 
+camdata <- camdata %>% mutate(DISTRS11 = as_factor(DISTRS11)) 
+camdata <- camdata %>% mutate(DISTRS16 = as_factor(DISTRS16)) 
+camdata <- camdata %>% mutate(DISTRS23 = as_factor(DISTRS23)) 
+camdata <- camdata %>% mutate(DISTRS37 = as_factor(DISTRS37)) 
+camdata <- camdata %>% mutate(DISTRS53 = as_factor(DISTRS53)) 
+camdata <- camdata %>% mutate(gender = as_factor(gender)) 
+camdata <- camdata %>% mutate(mrtlstus = as_factor(mrtlstus))
+camdata <- camdata %>% mutate(denom = as_factor(denom)) 
+``` 
+
 ```{r}
-
-
+#creates new dataset with only the desired variables and saves to working project
+camdata_clean <-camdata[c(154,159,188,189,195,202,207,214,228,244,246,247,250)]
+summary(camdata_clean)
+save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/camdata_clean.RData")
 ```
+
+### Graphs/ Tabular...
+#### Gender
+```{r}
+library(ggplot2)
+ggplot(camdata_clean, aes(x=gender)) + geom_bar() + labs(title = "Gender Bar Plot", x="gender", y="count")
+                                                        
+```
+
+### Analysis
+Plans: huge difference in gender (women 112> men 17)
+most are not religious (50) but very spiritual (45)
+90 nothing is wrong with mind
+50 protestant
+most are married
+most never have private practice
+
+want to create and analyze charts/graphs (maybe more)
+spiritual person w/ psychological problems vs religious
+spiritual person w/ physical problems vs religious
+mrtstus effect on health problems 
+belgdwth effect on health problems
+

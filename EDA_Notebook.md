@@ -45,81 +45,128 @@ their treatments. Notably, findings could influence policies related to
 holistic healthcare approaches that acknowledge the role of spirituality
 in patient well-being.
 
-#### Defining our data
+<!-- ```{r}
+nrow(camdata)
+ncol(camdata)
+# Our data set consists of 130 responses to 258 variables!
+``` -->
 
-Now that we’ve uploaded our data set, we can determine how large our
-dataset is and what variables we can narrow our focus to study. \#
-`{r} nrow(camdata) ncol(camdata) ## Our dataset consists of 130 responses to 258 variables!`
+### Defining Variables
 
-##### Cleaning our data
+The original data set consists of 130 responses to 258 variables!
+Narrowing the focus for a more direct approach, 13 variables were chosen
+instead. Three categories were made in order to create a distinction
+between these chosen variables. The categories are as follows:
+spirituality/religious, health effects, and personal data. For the first
+category, the variable *belgdwth* refers to the survey question “I
+believe in a God who watches over me”, *prvtpry* refers to “How often do
+you pray privately in place?”, *relpersn* refers to “to what extent do
+you consider yourself a religious person?”, and *sprtprsn* refers to “to
+what extent do you consider yourself a spiritual person?”. The health
+effects category contains both physical and psychological effects. These
+variables are *DISTRS11*: poor appetite, *DISTRS23*: nausea or upset
+stomach, *DISTRS37*: feeling weak in parts of your body, *DISTRS04*:
+feelings others are to blame for most of your troubles, *DISTRS16*:
+feeling lonely, *DISTRS53*: the idea that something is wrong with your
+mind. As for the personal data category, the variables chosen are
+*gender*: female or male, *mrtlstus*: marital status (single, married,
+divorced, or widowed), and *denom*: denomination. COME BACK TO EXPLAIN
+REASONING FOR SELECTING THESE VARIABLES!!
 
-We will create a new dataframe incorporating our variables of interest.
+### Cleaning The Data
 
-    ## tibble [130 × 13] (S3: tbl_df/tbl/data.frame)
-    ##  $ belgdwth: hvn_lbll [1:130]  1,  1,  3,  4,  3,  3,  4,  3,  3,  3,  4,  4,  4,  ...
-    ##    ..@ label       : chr "I believe in a God who watches over me."
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:4] 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:4] "Strongly disagree" "Disagree" "Agree" "Strongly agree"
-    ##  $ prvtpry : hvn_lbll [1:130] 1, 2, 4, 5, 8, 8, 5, 8, 1, 7, 8, 7, 8, 6, 1, 8, 4, 4,...
-    ##    ..@ label       : chr "How often do you pray privately in places other than a church or synagogue?"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:8] 1 2 3 4 5 6 7 8
-    ##    .. ..- attr(*, "names")= chr [1:8] "Never" "Less than once a month" "Once a month" "A few times a month" ...
-    ##  $ relpersn: hvn_lbll [1:130] 1, 2, 1, 2, 1, 2, 3, 1, 2, 2, 4, 2, 1, 1, 1, 1, 2, 4,...
-    ##    ..@ label       : chr "To what extent do you consider yourself a religious person?"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:4] 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:4] "Not religious at all" "Slightly religious" "Moderately religious" "Very religious"
-    ##  $ sprtprsn: hvn_lbll [1:130] 2, 1, 2, 3, 3, 4, 4, 4, 2, 4, 4, 3, 4, 4, 4, 4, 3, 4,...
-    ##    ..@ label       : chr "To what extent do you consider yourself a spiritual person?"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:4] 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:4] "Not spiritual at all" "Slightly spiritual" "Moderately spiritual" "Very spiritual"
-    ##  $ DISTRS04: hvn_lbll [1:130] 2, 0, 0, 0, 0, 0, 3, 1, 2, 3, 0, 1, 2, 0, 0, 0, 1, 1,...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:5] 0 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:5] "Not at all" "A little bit" "Moderately" "Quite a bit" ...
-    ##  $ DISTRS11: hvn_lbll [1:130] 1, 0, 0, 0, 3, 3, 2, 0, 2, 1, 1, 0, 3, 2, 0, 0, 1, 1,...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:5] 0 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:5] "Not at all" "A little bit" "Moderately" "Quite a bit" ...
-    ##  $ DISTRS16: hvn_lbll [1:130] 0, 0, 1, 4, 4, 2, 0, 1, 3, 4, 0, 1, 1, 0, 1, 1, 1, 3,...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:5] 0 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:5] "Not at all" "A little bit" "Moderately" "Quite a bit" ...
-    ##  $ DISTRS23: hvn_lbll [1:130]  4,  0,  0,  4,  3,  4,  1,  0,  2,  1,  1,  0,  2,  ...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:5] 0 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:5] "Not at all" "A little bit" "Moderately" "Quite a bit" ...
-    ##  $ DISTRS37: hvn_lbll [1:130] 2, 0, 0, 4, 3, 4, 3, 4, 1, 4, 2, 3, 3, 2, 2, 3, 4, 3,...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:5] 0 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:5] "Not at all" "A little bit" "Moderately" "Quite a bit" ...
-    ##  $ DISTRS53: hvn_lbll [1:130]  0,  0,  0,  2,  1,  2,  1,  1, NA,  0,  1,  0,  0,  ...
-    ##    ..@ label       : chr "This test consists of a list of problems people sometimes have.  Read each quest"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:4] 0 1 2 4
-    ##    .. ..- attr(*, "names")= chr [1:4] "Not at all" "A little bit" "Moderately" "Extremely"
-    ##  $ gender  : hvn_lbll [1:130]  2,  2,  2,  2,  2,  2,  2,  2, NA,  2,  2,  2,  2,  ...
-    ##    ..@ label       : chr "Sex"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:2] 1 2
-    ##    .. ..- attr(*, "names")= chr [1:2] "Male" "Female"
-    ##  $ mrtlstus: hvn_lbll [1:130] 2, 2, 2, 1, 1, 3, 1, 1, 2, 3, 2, 2, 3, 1, 2, 1, 3, 2,...
-    ##    ..@ label       : chr "Marital status"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:4] 1 2 3 4
-    ##    .. ..- attr(*, "names")= chr [1:4] "Single" "Married" "Divorced" "Widowed"
-    ##  $ denom   : hvn_lbll [1:130]  7,  2,  2, 11,  2,  2,  7, 30, NA,  3, 24,  5, 21, 1...
-    ##    ..@ label       : chr "Denomination"
-    ##    ..@ format.stata: chr "%8.0g"
-    ##    ..@ labels      : Named num [1:24] 1 2 3 4 5 7 8 10 11 12 ...
-    ##    .. ..- attr(*, "names")= chr [1:24] "None" "Protestant" "Baptist" "Free Evangelical" ...
+We will create a new data frame incorporating our variables of interest.
 
-#### Analysis
+    ##   [1] "strdream" "disworld" "IGNROVR1" "sprtwrk"  "drmfutr"  "hibnghlp"
+    ##   [7] "inenvrmt" "outspntm" "hrnvoice" "cntraln"  "spclite"  "consbody"
+    ##  [13] "mysmean"  "heatbdy"  "antdstny" "enrgysp"  "extrpow"  "thnkhpn" 
+    ##  [19] "prtdie"   "thnkslw"  "expndbdy" "mnfldrms" "readmnd"  "othrctrl"
+    ##  [25] "vivdrms"  "mntlsprt" "vibskin"  "peace"    "ineyevis" "trnsfrm" 
+    ##  [31] "intouch"  "atrctloc" "nothnk"   "unvrsrel" "knwclng"  "dilinvce"
+    ##  [37] "enrgypls" "cursed"   "sndhrmen" "supntbng" "lfeineye" "blrenvrt"
+    ##  [43] "vewaprt"  "notrivl"  "felsprtb" "posstho"  "hrvochlp" "inspinst"
+    ##  [49] "senrad"   "discenv"  "disself"  "strgtho"  "nofocus"  "sinbdy"  
+    ##  [55] "ildivne"  "benlght"  "incrund"  "pecdrm"   "exgwrld"  "IGNROVR2"
+    ##  [61] "spowork"  "dremfut"  "hibnhlp"  "inenvrnt" "outsptm"  "scldvoc" 
+    ##  [67] "ctstrfor" "imsplit"  "consep"   "depmyst"  "hetbdy"   "antdest" 
+    ##  [73] "enrgyspn" "extnpow"  "mothnkhp" "prtdies"  "slwthk"   "bdyexpnd"
+    ##  [79] "mnfldrm"  "otplrdmd" "wilacton" "vivdrems" "mentsup"  "tngskin" 
+    ##  [85] "atpeace"  "visineye" "bngtrans" "intochev" "locatrct" "bngthot" 
+    ##  [91] "unvrel"   "knocal"   "dilinvoc" "enrgybdy" "crsed"    "mentlhrm"
+    ##  [97] "contsubn" "lifeiney" "blrenvr"  "wrldvew"  "notrvil"  "felexbng"
+    ## [103] "thoinmnd" "voichlp"  "insinst"  "spradsns" "discenvr" "selfwrld"
+    ## [109] "nomythot" "notfocus" "strngsin" "ildivstr" "benlite"  "inrundst"
+    ## [115] "extrexp"  "evokslf"  "altrslf"  "relatexp" "meditech" "whtech"  
+    ## [121] "lngprct"  "oftprct"  "teahinst" "MNDFUL01" "MNDFUL02" "MNDFUL03"
+    ## [127] "MNDFUL04" "MNDFUL05" "MNDFUL06" "MNDFUL07" "MNDFUL08" "MNDFUL09"
+    ## [133] "MNDFUL10" "MNDFUL11" "MNDFUL12" "MNDFUL13" "MNDFUL14" "SPTEXP01"
+    ## [139] "SPTEXP02" "SPTEXP03" "SPTEXP04" "SPTEXP05" "SPTEXP06" "SPTEXP07"
+    ## [145] "SPTEXP08" "SPTEXP09" "SPTEXP10" "SPTEXP11" "SPTEXP12" "SPTEXP13"
+    ## [151] "SPTEXP14" "SPTEXP15" "SPTEXP16" "belgdwth" "redpnwld" "frgwrng" 
+    ## [157] "frgothrt" "gdfrgv"   "prvtpry"  "oftmed"   "relprgm"  "rdbblit" 
+    ## [163] "PRYB4MEL" "lgsprtfc" "prtnrwgd" "suptgod"  "punshsin" "gdabndon"
+    ## [169] "norelygd" "relgstrs" "conghlp"  "congcmft" "condemnd" "concrit" 
+    ## [175] "lifechng" "agexp"    "fathgain" "agegain"  "losfaith" "ageloss" 
+    ## [181] "belinlif" "cntrbch"  "hrschrh"  "atendrel" "wrshpact" "relpref" 
+    ## [187] "DENOM_SP" "relpersn" "sprtprsn" "lifediv"  "lifecal"  "DISTRS01"
+    ## [193] "DISTRS02" "DISTRS03" "DISTRS04" "DISTRS05" "DISTRS06" "DISTRS07"
+    ## [199] "DISTRS08" "DISTRS09" "DISTRS10" "DISTRS11" "DISTRS12" "DISTRS13"
+    ## [205] "DISTRS14" "DISTRS15" "DISTRS16" "DISTRS17" "DISTRS18" "DISTRS19"
+    ## [211] "DISTRS20" "DISTRS21" "DISTRS22" "DISTRS23" "DISTRS24" "DISTRS25"
+    ## [217] "DISTRS26" "DISTRS27" "DISTRS28" "DISTRS29" "DISTRS30" "DISTRS31"
+    ## [223] "DISTRS32" "DISTRS33" "DISTRS34" "DISTRS35" "DISTRS36" "DISTRS37"
+    ## [229] "DISTRS38" "DISTRS39" "DISTRS40" "DISTRS41" "DISTRS42" "DISTRS43"
+    ## [235] "DISTRS44" "DISTRS45" "DISTRS46" "DISTRS47" "DISTRS48" "DISTRS49"
+    ## [241] "DISTRS50" "DISTRS51" "DISTRS52" "DISTRS53" "age"      "gender"  
+    ## [247] "mrtlstus" "chldrn"   "lfesitu"  "denom"    "eductn"   "prsntoc" 
+    ## [253] "sample"   "grouppe"  "I_AGE"    "I_ATTEND" "I_EDUC"   "I_GENDER"
+
+    ##               belgdwth                    prvtpry                   relpersn 
+    ##  Strongly disagree:25   Never                 :39   Not religious at all:50  
+    ##  Disagree         :18   More than once a day  :22   Slightly religious  :37  
+    ##  Agree            :41   Less than once a month:21   Moderately religious:26  
+    ##  Strongly agree   :43   A few times a week    :17   Very religious      :15  
+    ##  NA's             : 3   Once a day            :14   NA's                : 2  
+    ##                         (Other)               :15                            
+    ##                         NA's                  : 2                            
+    ##                  sprtprsn          DISTRS04          DISTRS11 
+    ##  Not spiritual at all:16   Not at all  :76   Not at all  :90  
+    ##  Slightly spiritual  :22   A little bit:33   A little bit:25  
+    ##  Moderately spiritual:45   Moderately  : 9   Moderately  : 6  
+    ##  Very spiritual      :45   Quite a bit : 9   Quite a bit : 5  
+    ##  NA's                : 2   Extremely   : 1   Extremely   : 2  
+    ##                            NA's        : 2   NA's        : 2  
+    ##                                                               
+    ##          DISTRS16          DISTRS23          DISTRS37          DISTRS53 
+    ##  Not at all  :59   Not at all  :69   Not at all  :47   Not at all  :90  
+    ##  A little bit:46   A little bit:34   A little bit:33   A little bit:24  
+    ##  Moderately  : 9   Moderately  :10   Moderately  :17   Moderately  : 8  
+    ##  Quite a bit : 7   Quite a bit : 4   Quite a bit :20   Extremely   : 5  
+    ##  Extremely   : 7   Extremely   : 9   Extremely   :11   NA's        : 3  
+    ##  NA's        : 2   NA's        : 4   NA's        : 2                    
+    ##                                                                         
+    ##     gender        mrtlstus              denom   
+    ##  Male  : 17   Single  :35   Protestant     :50  
+    ##  Female:112   Married :69   No denomination:29  
+    ##  NA's  :  1   Divorced:25   Other          : 8  
+    ##               Widowed : 1   Christian      : 5  
+    ##                             Catholic       : 5  
+    ##                             (Other)        :28  
+    ##                             NA's           : 5
+
+### Graphs/ Tabular…
+
+#### Gender
+
+![](EDA_Notebook_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+### Analysis
+
+Plans: huge difference in gender (women 112\> men 17) most are not
+religious (50) but very spiritual (45) 90 nothing is wrong with mind 50
+protestant most are married most never have private practice
+
+want to create and analyze charts/graphs (maybe more) spiritual person
+w/ psychological problems vs religious spiritual person w/ physical
+problems vs religious mrtstus effect on health problems belgdwth effect
+on health problems
