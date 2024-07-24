@@ -11,7 +11,7 @@ library(tidyverse)
 ```
 
 ### Complementary and Alternative Medical (CAM) and Spirituality, Religiosity Survey
-The CAM and Spirituality, Religiosity survey was given to chronically ill patients who were randomly chosen from a patient database at a private medical clinic in Southampton, UK. To be a participant for the survey, individuals were required to (1) have recent treatment within the last three years, (2) have a diagnosis of either migraines, irritable bowel, or chronic fatigue syndrome, and (3) have an age greater than 18. Six hundred questionnaires were originally mailed to the patients, yet there was a response rate of 18.5%, with 111 successfully completed questionnaires. The survey aims to explore the impact of spirituality on health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The following data is sourced from the Association of Religion Data Archives, www.theARDA.com, and was collected by principal investigators Niko Kohls, Harald Walach, and George Lewish. The original data set consists of 254 variables and 111 participants, but for better understanding, the ARDA decided to add variables and responses to include 258 total variables and 130 respondents. However, for the purposes of this analysis, the variable count has been reduced to 13 variables. While this is a much shorter data set, the chosen variables create a more direct approach. A concise data set facilitates clearer interpretation of results without one being overwhelmed by excessive data. 
+The CAM and Spirituality, Religiosity survey was given to chronically ill patients who were randomly chosen from a patient database at a private medical clinic in Southampton, UK. To be a participant for the survey, individuals were required to (1) have recent treatment within the last three years, (2) have a diagnosis of either migraines, irritable bowel, or chronic fatigue syndrome, and (3) have an age greater than 18. Six hundred questionnaires were originally mailed to the patients, yet there was a response rate of 18.5%, with 111 successfully completed questionnaires. The survey aims to explore the impact of spirituality on health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The following data is sourced from the Association of Religion Data Archives, www.theARDA.com, and was collected by principal investigators Niko Kohls, Harald Walach, and George Lewish. The original data set consists of 254 variables and 111 participants, but for better comprehension, the ARDA decided to add variables and responses to include 258 total variables and 130 respondents. However, for the purposes of this analysis, the variable count has been reduced to 13 variables. While this is a much shorter data set, the chosen variables create a more direct approach. A concise data set facilitates clearer interpretation of results without one being overwhelmed by excessive data. 
 
 ### Motivation
 Understanding the relationship between spirituality and health is an important aspect in well-being. In medical environments, especially those dominated by Western medicine, spirituality's impact on health is often disregarded. With this data set, investigators are able to explore how spirituality affects various sectors of health and overall well-being. Via analysis, patterns or correlations can be linked. One could uncover whether certain spiritual practices or beliefs are associated with better mental health, reduced stress, or improved coping mechanisms. In return, these patterns are relevant to healthcare providers or therapists looking to integrate effective strategies into their treatments. Notably, findings could influence policies related to holistic healthcare approaches that acknowledge the role of spirituality in patient well-being.
@@ -35,7 +35,7 @@ camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosit
 ### Cleaning The Data
 We will create a new data frame incorporating our variables of interest.
 
-```{r}
+```{r, results='hide'}
 #gives variable names and location
 names(camdata) 
 
@@ -60,22 +60,52 @@ camdata <- camdata %>% mutate(mrtlstus = as_factor(mrtlstus))
 camdata <- camdata %>% mutate(denom = as_factor(denom)) 
 ``` 
 
-```{r}
+```{r, results='hide'}
 #creates new dataset with only the desired variables and saves to working project
 camdata_clean <-camdata[c(154,159,188,189,195,202,207,214,228,244,246,247,250)]
 summary(camdata_clean)
 save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/camdata_clean.RData")
 ```
 
-### Graphs/ Tabular...
+### Getting to Know the Participants
 #### Gender
 ```{r}
 library(ggplot2)
-ggplot(camdata_clean, aes(x=gender)) + geom_bar() + labs(title = "Gender Bar Plot", x="gender", y="count")
-                                                        
+ggplot(camdata_clean, aes(x=gender, fill = gender)) + geom_bar() + scale_fill_manual(values = c("blue4", "darkred")) + labs(title = "Gender", x="Gender", y="Count")
 ```
 
+[Analysis here]
+#### Marital Status
+```{r}
+ggplot(camdata_clean, aes(x=mrtlstus, fill = mrtlstus)) + geom_bar() + scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) + labs(title = "Marital Status", x = "Status", y = "Count" )
+```
+
+[Analysis here]
+
+#### Denomination
+```{r}
+ggplot(camdata_clean, aes(x=denom, fill = denom)) + geom_bar() + labs(title = "Religious Denomination", x = "Denomination", y = "Count" ) + theme(axis.text.x.bottom = element_text(angle = 45, hjust = 0.9))
+```
+
+[Anaylis here]
+
+#### How Religious or How Spiritual
+```{r, figures-side, fig.show='hold', out.width="50%"}
+ggplot(camdata_clean, aes(x=relpersn, fill = relpersn)) +  geom_bar() + scale_fill_manual(values = c("cadetblue2", "burlywood2", "brown2", "coral2")) + labs(title = "Religious Level", x = "Level of Religiousity", y = "Count") + theme(axis.text.x.bottom = element_text(size = 7.75))
+
+ggplot(camdata_clean, aes(x=sprtprsn, fill = sprtprsn)) + geom_bar() + scale_fill_manual(values = c("cadetblue2", "burlywood2", "brown2", "coral2")) + labs(title = "Spiritual Level", x = "Level of Spirituality", y = "Count") + theme(axis.text.x.bottom = element_text(size = 7.75))
+```
+
+[Analysis here]
+
 ### Analysis
+
+####Scatterplot
+```{r}
+attach(camdata_clean)
+```
+
+
 Plans: huge difference in gender (women 112> men 17)
 most are not religious (50) but very spiritual (45)
 90 nothing is wrong with mind
