@@ -23,7 +23,7 @@ ncol(camdata)
 ``` -->
 
 ### Defining Variables
-The original data set consists of 130 responses to 258 variables! Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. 
+The original data set consists of 130 responses to 258 variables. Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. 
 * For the **spiritual and religious** category, the following variables are as defined: 
     * *belgdwth* refers to the survey question "I believe in a God who watches over me",
     * *prvtpry* refers to "How often do you pray privately in place?",
@@ -61,7 +61,8 @@ library(purrr)
 library(knitr)
 
 #variables are stored as labeled vectors in the original data set so it must be converted to a regular vector so commands like summary apply to the variable
-camdata <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) %>%
+#create a new dataset with only desired variables
+camdata_clean <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) %>%
   mutate(prvtpry = as_factor(prvtpry)) %>% 
   mutate(relpersn = as_factor(relpersn))%>%
   mutate(sprtprsn = as_factor(sprtprsn))%>%
@@ -74,13 +75,8 @@ camdata <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) %>%
   mutate(gender = as_factor(gender))%>%
   mutate(mrtlstus = as_factor(mrtlstus))%>%
   mutate(denom = as_factor(denom)) 
-``` 
 
-```{r, results='hide'}
-#create new dataset with only the desired variables and saves to working project
-camdata_clean <-camdata[c(154,159,188,189,195,202,207,214,228,244,246,247,250)]
-
-#print summary of our cleaned dataset
+#summarize new dataset
 summary(camdata_clean)
 
 #save updated dataframe to github
