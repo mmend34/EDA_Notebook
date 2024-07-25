@@ -70,23 +70,73 @@ feelings others are to blame for most of your troubles, *DISTRS16*:
 feeling lonely, *DISTRS53*: the idea that something is wrong with your
 mind. As for the personal data category, the variables chosen are
 *gender*: female or male, *mrtlstus*: marital status (single, married,
-divorced, or widowed), and *denom*: denomination. COME BACK TO EXPLAIN
-REASONING FOR SELECTING THESE VARIABLES!!
+divorced, or widowed), and *denom*: denomination.
 
-### Cleaning The Data
-
-We will create a new data frame incorporating our variables of interest.
+Given the abundant amount of original variables, the elected variables
+were selected carefully. The variables *belgwth*, *prvtpry*, *relpersn*,
+and *sprtprsn* are variables that were chosen to determine how spiritual
+or religious a participant might be. The variable *belgwth* indirectly
+questions the participant if they believe in a greater existence and if
+the participant believes that greater existence is watching them. The
+variable *prvtpry* aims to see how religious a participant actually is
+outside of church. Oftentimes, individuals want a certain image of
+themselves to be displayed to the public, but private practices are a
+different topic. The variables *relpersn* and *sprtprsn* are a self
+ranking and sets how the participant views themselves on a scale from
+“not at all” to “very”. The next set of variables relate to a
+participant’s current health issues. They can be further split into
+physical and psychological effects. The physical symptom variables were
+poor appetite (*DISTRS11*), nausea or upset stomach (*DISTRS23*), and
+feelings of weakness in one’s body (*DISTRS37*). These variables were
+selected as they directly related to the requirements to the survey
+study of having irritable bowel or chronic fatigue syndrome. While the
+third indicator was migraines, the statements related to them were not
+as direct as these. So for the sake of a focused analysis, irritable
+bowel and chronic fatigue syndrome were preferred. The psychological
+health effects chosen were feelings others were to blame for most of
+one’s troubles (*DISTRS04*), feelings of loneliness (*DISTRS16*), and
+feelings that something is wrong with one’s mind (*DISTRS53*).
+*DISTRS04* was chosen to see if participants would blame their problems
+on an entity rather than themselves while *DISTRS16* and *DISTRS53* were
+elected to see if the level of religiosity or spirituality affected how
+lonely one was or if they felt something was genuinely wrong with them.
+The last set of variables were demographic variables to get to know the
+data set population. These variables include gender, marital status, and
+denomination. Ultimately, these variables were chosen to illuminate any
+findings on the health relationships between the spiritual and physical
+in hopes to offer a shorter but to some extent holistic approach.
 
 ### Getting to Know the Participants
 
-#### Gender
+#### Differences in Gender
 
 ![](EDA_Notebook_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
-\[Analysis here\] \#### Marital Status
+A notable gender disparity can be observed within the data set. The
+survey responses were predominantly from women with 112 respondents,
+whereas men represented a much smaller group with only 17 respondents.
+This stark difference in sample sizes raises important considerations
+while interpreting the findings in relation to gender. An important
+concept to this disparity may be due to voluntary response bias. The
+imbalance suggests that women may be more inclined to participate in
+surveys regarding spirituality, religiosity, or health in comparison to
+men. Notably, the small number of male respondents limits the ability to
+generalize findings across the general population. However, despite the
+imbalance, the data still provides valuable insights into how
+spirituality and religiosity influences health.
+
+#### Marital Status
+
 ![](EDA_Notebook_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-\[Analysis here\]
+The marital status of an individual can provide valuable insights into
+how personal relationships and social structures influence or interact
+with an individual’s spiritual beliefs and practices. Married
+individuals generally experience higher levels of social support, which
+can positively influence their overall well-being. Spirituality and
+religiosity can play a role in strengthening marital bonds and providing
+emotional and practical support. This suggests that marital status
+impacts physical health outcomes. \[Continue here\]
 
 #### Denomination
 

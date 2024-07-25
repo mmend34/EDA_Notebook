@@ -23,7 +23,9 @@ ncol(camdata)
 ``` -->
 
 ### Defining Variables
-The original data set consists of 130 responses to 258 variables! Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. For the first category, the variable *belgdwth* refers to the survey question "I believe in a God who watches over me", *prvtpry* refers to "How often do you pray privately in place?", *relpersn* refers to "to what extent do you consider yourself a religious person?", and *sprtprsn* refers to "to what extent do you consider yourself a spiritual person?". The health effects category contains both physical and psychological effects. These variables are *DISTRS11*: poor appetite, *DISTRS23*: nausea or upset stomach, *DISTRS37*: feeling weak in parts of your body, *DISTRS04*: feelings others are to blame for most of your troubles, *DISTRS16*: feeling lonely, *DISTRS53*: the idea that something is wrong with your mind. As for the personal data category, the variables chosen are *gender*: female or male, *mrtlstus*: marital status (single, married, divorced,  or widowed), and *denom*: denomination. COME BACK TO EXPLAIN REASONING FOR SELECTING THESE VARIABLES!!
+The original data set consists of 130 responses to 258 variables! Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. For the first category, the variable *belgdwth* refers to the survey question "I believe in a God who watches over me", *prvtpry* refers to "How often do you pray privately in place?", *relpersn* refers to "to what extent do you consider yourself a religious person?", and *sprtprsn* refers to "to what extent do you consider yourself a spiritual person?". The health effects category contains both physical and psychological effects. These variables are *DISTRS11*: poor appetite, *DISTRS23*: nausea or upset stomach, *DISTRS37*: feeling weak in parts of your body, *DISTRS04*: feelings others are to blame for most of your troubles, *DISTRS16*: feeling lonely, *DISTRS53*: the idea that something is wrong with your mind. As for the personal data category, the variables chosen are *gender*: female or male, *mrtlstus*: marital status (single, married, divorced,  or widowed), and *denom*: denomination. 
+
+Given the abundant amount of original variables, the elected variables were selected carefully. The variables *belgwth*, *prvtpry*, *relpersn*, and *sprtprsn* are variables that were chosen to determine how spiritual or religious a participant might be. The variable *belgwth* indirectly questions the participant if they believe in a greater existence and if the participant believes that greater existence is watching them. The variable *prvtpry* aims to see how religious a participant actually is outside of church. Oftentimes, individuals want a certain image of themselves to be displayed to the public, but private practices are a different topic. The variables *relpersn* and *sprtprsn* are a self ranking and sets how the participant views themselves on a scale from "not at all" to "very". The next set of variables relate to a participant's current health issues. They can be further split into physical and psychological effects. The physical symptom variables were poor appetite (*DISTRS11*), nausea or upset stomach (*DISTRS23*), and feelings of weakness in one's body (*DISTRS37*). These variables were selected as they directly related to the requirements to the survey study of having irritable bowel or chronic fatigue syndrome. While the third indicator was migraines, the statements related to them were not as direct as these. So for the sake of a focused analysis, irritable bowel and chronic fatigue syndrome were preferred. The psychological health effects chosen were feelings others were to blame for most of one's troubles (*DISTRS04*), feelings of loneliness (*DISTRS16*), and feelings that something is wrong with one's mind (*DISTRS53*). *DISTRS04* was chosen to see if participants would blame their problems on an entity rather than themselves while *DISTRS16* and *DISTRS53* were elected to see if the level of religiosity or spirituality affected how lonely one was or if they felt something was genuinely wrong with them. The last set of variables were demographic variables to get to know the data set population. These variables include gender, marital status, and denomination. Ultimately, these variables were chosen to illuminate any findings on the health relationships between the spiritual and physical in hopes to offer a shorter but to some extent holistic approach. 
 
 ```{r}
 #load data set
@@ -31,9 +33,6 @@ load("/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/CAM Original
 #create new name for data set
 camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosity_Survey
 ```
-
-### Cleaning The Data
-We will create a new data frame incorporating our variables of interest.
 
 ```{r, results='hide'}
 #gives variable names and location
@@ -45,16 +44,16 @@ library(purrr)
 library(knitr)
 
 #variables are stored as labelled vectors in the original data set so it must be converted to a regular vector so commands like summary apply to the variable
-camdata <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) 
+camdata <- camdata %>% mutate(belgdwth = as_factor(belgdwth))
 camdata <- camdata %>% mutate(prvtpry = as_factor(prvtpry)) 
-camdata <- camdata %>% mutate(relpersn = as_factor(relpersn)) 
-camdata <- camdata %>% mutate(sprtprsn = as_factor(sprtprsn)) 
-camdata <- camdata %>% mutate(DISTRS04 = as_factor(DISTRS04)) 
-camdata <- camdata %>% mutate(DISTRS11 = as_factor(DISTRS11)) 
-camdata <- camdata %>% mutate(DISTRS16 = as_factor(DISTRS16)) 
-camdata <- camdata %>% mutate(DISTRS23 = as_factor(DISTRS23)) 
-camdata <- camdata %>% mutate(DISTRS37 = as_factor(DISTRS37)) 
-camdata <- camdata %>% mutate(DISTRS53 = as_factor(DISTRS53)) 
+camdata <- camdata %>% mutate(relpersn = as_factor(relpersn))
+camdata <- camdata %>% mutate(sprtprsn = as_factor(sprtprsn))
+camdata <- camdata %>% mutate(DISTRS04 = as_factor(DISTRS04))
+camdata <- camdata %>% mutate(DISTRS11 = as_factor(DISTRS11))
+camdata <- camdata %>% mutate(DISTRS16 = as_factor(DISTRS16))
+camdata <- camdata %>% mutate(DISTRS23 = as_factor(DISTRS23))
+camdata <- camdata %>% mutate(DISTRS37 = as_factor(DISTRS37))
+camdata <- camdata %>% mutate(DISTRS53 = as_factor(DISTRS53))
 camdata <- camdata %>% mutate(gender = as_factor(gender)) 
 camdata <- camdata %>% mutate(mrtlstus = as_factor(mrtlstus))
 camdata <- camdata %>% mutate(denom = as_factor(denom)) 
@@ -68,19 +67,20 @@ save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook
 ```
 
 ### Getting to Know the Participants
-#### Gender
+#### Differences in Gender
 ```{r}
 library(ggplot2)
 ggplot(camdata_clean, aes(x=gender, fill = gender)) + geom_bar() + scale_fill_manual(values = c("blue4", "darkred")) + labs(title = "Gender", x="Gender", y="Count")
 ```
 
-[Analysis here]
+A notable gender disparity can be observed within the data set. The survey responses were predominantly from women with 112 respondents, whereas men represented a much smaller group with only 17 respondents. This stark difference in sample sizes raises important considerations while interpreting the findings in relation to gender. An important concept to this disparity may be due to voluntary response bias. The imbalance suggests that women may be more inclined to participate in surveys regarding spirituality, religiosity, or health in comparison to men. Notably, the small number of male respondents limits the ability to generalize findings across the general population. However, despite the imbalance, the data still provides valuable insights into how spirituality and religiosity influences health.
+
 #### Marital Status
 ```{r}
 ggplot(camdata_clean, aes(x=mrtlstus, fill = mrtlstus)) + geom_bar() + scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) + labs(title = "Marital Status", x = "Status", y = "Count" )
 ```
 
-[Analysis here]
+The marital status of an individual can provide valuable insights into how personal relationships and social structures influence or interact with an individual's spiritual beliefs and practices. Married individuals generally experience higher levels of social support, which can positively influence their overall well-being. Spirituality and religiosity can play a role in strengthening marital bonds and providing emotional and practical support. This suggests that marital status impacts physical health outcomes. [Continue here] 
 
 #### Denomination
 ```{r}
