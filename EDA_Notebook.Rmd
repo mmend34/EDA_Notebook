@@ -16,14 +16,9 @@ The CAM and Spirituality, Religiosity survey was given to chronically ill patien
 ### Motivation
 Understanding the relationship between spirituality and health is an important aspect in well-being. In medical environments, especially those dominated by Western medicine, spirituality's impact on health is often disregarded. With this data set, investigators are able to explore how spirituality affects various sectors of health and overall well-being. Via analysis, patterns or correlations can be linked. One could uncover whether certain spiritual practices or beliefs are associated with better mental health, reduced stress, or improved coping mechanisms. In return, these patterns are relevant to healthcare providers or therapists looking to integrate effective strategies into their treatments. Notably, findings could influence policies related to holistic healthcare approaches that acknowledge the role of spirituality in patient well-being.
 
-<!-- ```{r}
-nrow(camdata)
-ncol(camdata)
-# Our data set consists of 130 responses to 258 variables!
-``` -->
-
 ### Defining Variables
 The original data set consists of 130 responses to 258 variables. Narrowing the focus for a more direct approach, 13 variables were chosen instead. Three categories were made in order to create a distinction between these chosen variables. The categories are as follows: spirituality/religious, health effects, and personal data. 
+
 * For the **spiritual and religious** category, the following variables are as defined: 
     * *belgdwth* refers to the survey question "I believe in a God who watches over me",
     * *prvtpry* refers to "How often do you pray privately in place?",
@@ -41,7 +36,31 @@ The original data set consists of 130 responses to 258 variables. Narrowing the 
     * *mrtlstus*: marital status (single, married, divorced,  or widowed), 
     * and *denom*: denomination. 
 
-Given the abundant amount of original variables, the elected variables were selected carefully. The variables *belgwth*, *prvtpry*, *relpersn*, and *sprtprsn* are variables that were chosen to determine how spiritual or religious a participant might be. The variable *belgwth* indirectly questions the participant if they believe in a greater existence and if the participant believes that greater existence is watching them. The variable *prvtpry* aims to see how religious a participant actually is outside of church. Oftentimes, individuals want a certain image of themselves to be displayed to the public, but private practices are a different topic. The variables *relpersn* and *sprtprsn* are a self ranking and sets how the participant views themselves on a scale from "not at all" to "very". The next set of variables relate to a participant's current health issues. They can be further split into physical and psychological effects. The physical symptom variables were poor appetite (*DISTRS11*), nausea or upset stomach (*DISTRS23*), and feelings of weakness in one's body (*DISTRS37*). These variables were selected as they directly related to the requirements to the survey study of having irritable bowel or chronic fatigue syndrome. While the third indicator was migraines, the statements related to them were not as direct as these. So for the sake of a focused analysis, irritable bowel and chronic fatigue syndrome were preferred. The psychological health effects chosen were feelings others were to blame for most of one's troubles (*DISTRS04*), feelings of loneliness (*DISTRS16*), and feelings that something is wrong with one's mind (*DISTRS53*). *DISTRS04* was chosen to see if participants would blame their problems on an entity rather than themselves while *DISTRS16* and *DISTRS53* were elected to see if the level of religiosity or spirituality affected how lonely one was or if they felt something was genuinely wrong with them. The last set of variables were demographic variables to get to know the data set population. These variables include gender, marital status, and denomination. Ultimately, these variables were chosen to illuminate any findings on the health relationships between the spiritual and physical in hopes to offer a shorter but to some extent holistic approach. 
+
+#### Rationale for Selecting Variables
+Given the abundant amount of original variables, the elected variables were selected carefully. The variables *belgwth*, *prvtpry*, *relpersn*, and *sprtprsn* are variables that were chosen to determine how spiritual or religious a participant might be: 
+
+* The variable *belgwth* indirectly questions the participant if they believe in a greater existence and if the participant believes that greater existence is watching them. 
+* The variable *prvtpry* aims to see how religious a participant actually is outside of church. Oftentimes, individuals want a certain image of themselves to be displayed to the public, but private practices are a different topic.
+* The variables *relpersn* and *sprtprsn* are a self ranking and sets how the participant views themselves on a scale from "not at all" to "very". 
+
+The next set of variables relate to a participant's current health issues. They can be further split into physical and psychological effects. 
+
+* The physical symptom variables were poor appetite (*DISTRS11*), nausea or upset stomach (*DISTRS23*), and feelings of weakness in one's body (*DISTRS37*). These variables were selected as they directly related to the requirements to the survey study of having irritable bowel or chronic fatigue syndrome. While the third indicator was migraines, the statements related to them were not as direct as these. So for the sake of a focused analysis, irritable bowel and chronic fatigue syndrome were preferred. 
+* The psychological health effects chosen were feelings others were to blame for most of one's troubles (*DISTRS04*), feelings of loneliness (*DISTRS16*), and feelings that something is wrong with one's mind (*DISTRS53*). *DISTRS04* was chosen to see if participants would blame their problems on an entity rather than themselves while *DISTRS16* and *DISTRS53* were elected to see if the level of religiosity or spirituality affected how lonely one was or if they felt something was genuinely wrong with them. 
+
+The last set of variables were demographic variables to get to know the data set population. These variables include gender, marital status, and denomination. Ultimately, these variables were chosen to illuminate any findings on the health relationships between the spiritual and physical in hopes to offer a shorter but to some extent holistic approach. 
+
+(While creating our new dataset, we renamed certain variables for clarity during data analysis as follows: 
+
+* *belgdwth* to *godwatches*
+* *DISTRS11* to *poor_appetite*,
+* *DISTRS23* to *nausea*, 
+* *DISTRS37* to *weakness*, 
+* *DISTRS04* to *blameothers*,
+* *DISTRS16* to *lonely*,
+* *DISTRS53* to *mindwrong*.)
+
 
 ```{r}
 #load data set
@@ -50,34 +69,44 @@ load("/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/CAM Original
 camdata <- Complementary_and_Alternative_Medical_CAM_and_Spirituality_Religiosity_Survey
 ```
 
-```{r, results='hide'}
-#gives variable names and location
-names(camdata) 
-
-#access to needed libraries
+```{r}
+#library access
+##install.packages(tidyverse)
+##install.packages(haven)
+##install.packages(purrr)
+##install.packages(knitr)
 library(tidyverse)
 library(haven)
 library(purrr)
 library(knitr)
 
 #variables are stored as labeled vectors in the original data set so it must be converted to a regular vector so commands like summary apply to the variable
-#create a new dataset with only desired variables
-camdata_clean <- camdata %>% mutate(belgdwth = as_factor(belgdwth)) %>%
-  mutate(prvtpry = as_factor(prvtpry)) %>% 
-  mutate(relpersn = as_factor(relpersn))%>%
-  mutate(sprtprsn = as_factor(sprtprsn))%>%
-  mutate(DISTRS04 = as_factor(DISTRS04))%>%
-  mutate(DISTRS11 = as_factor(DISTRS11))%>%
-  mutate(DISTRS16 = as_factor(DISTRS16))%>%
-  mutate(DISTRS23 = as_factor(DISTRS23))%>%
-  mutate(DISTRS37 = as_factor(DISTRS37))%>%
-  mutate(DISTRS53 = as_factor(DISTRS53))%>%
-  mutate(gender = as_factor(gender))%>%
-  mutate(mrtlstus = as_factor(mrtlstus))%>%
-  mutate(denom = as_factor(denom)) 
+#create new  dataset, camdata_clean
+camdata_clean <- camdata %>% 
+  mutate(belgdwth = as_factor(belgdwth), #mutate labeled vectors to factors
+         prvtpry = as_factor(prvtpry),
+         relpersn = as_factor(relpersn),
+         sprtprsn = as_factor(sprtprsn),
+         DISTRS04 = as_factor(DISTRS04),
+         DISTRS11 = as_factor(DISTRS11),
+         DISTRS16 = as_factor(DISTRS16),
+         DISTRS23 = as_factor(DISTRS23),
+         DISTRS37 = as_factor(DISTRS37),
+         DISTRS53 = as_factor(DISTRS53),
+         gender = as_factor(gender),
+         mrtlstus = as_factor(mrtlstus),
+         denom = as_factor(denom)
+        ) %>%
+  select(belgdwth, prvtpry, relpersn, sprtprsn, DISTRS04, DISTRS11, DISTRS16, DISTRS23, DISTRS37, DISTRS53, gender, mrtlstus, denom) %>% #select variables of interest
+  rename(godwatches = belgdwth, #rename for clarity
+         poor_appetite = DISTRS11,
+         nausea = DISTRS23,
+         weakness = DISTRS37,
+         blameothers = DISTRS04,
+         lonely = DISTRS16,
+         mindwrong = DISTRS53)
 
-#summarize new dataset
-summary(camdata_clean)
+# summary(camdata_clean)
 
 #save updated dataframe to github
 save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook/Datasets/camdata_clean.RData")
@@ -90,7 +119,7 @@ library(ggplot2)
 ggplot(camdata_clean, aes(x=gender, fill = gender))+ 
   geom_bar()+ 
   scale_fill_manual(values = c("blue4", "darkred"))+ 
-  labs(title = "Gender", x="Gender", y="Count")
+  labs(title = "Gender Count in Survey Responses", x="Gender", y="Count", fill="Gender")
 ```
 
 A notable gender disparity can be observed within the data set. The survey responses were predominantly from women with 112 respondents, whereas men represented a much smaller group with only 17 respondents. This stark difference in sample sizes raises important considerations while interpreting the findings in relation to gender. An important concept to this disparity may be due to voluntary response bias. The imbalance suggests that women may be more inclined to participate in surveys regarding spirituality, religiosity, or health in comparison to men. Notably, the small number of male respondents limits the ability to generalize findings across the general population. However, despite the imbalance, the data still provides valuable insights into how spirituality and religiosity influences health.
@@ -100,43 +129,102 @@ A notable gender disparity can be observed within the data set. The survey respo
 ggplot(camdata_clean, aes(x=mrtlstus, fill = mrtlstus))+ 
   geom_bar()+ 
   scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+ 
-  labs(title = "Marital Status", x = "Status", y = "Count" )
+  labs(title = "Marital Status Distribution in Survey Responses", x = "Status", y = "Count", fill="Marital Status")
 ```
 
-The marital status of an individual can provide valuable insights into how personal relationships and social structures influence or interact with an individual's spiritual beliefs and practices. Married individuals generally experience higher levels of social support, which can positively influence their overall well-being. Spirituality and religiosity can play a role in strengthening marital bonds and providing emotional and practical support. This suggests that marital status impacts physical health outcomes. [Continue here] 
+The marital status of an individual can provide valuable insights into how personal relationships and social structures influence or interact with an individual's spiritual beliefs and practices. Married individuals generally experience higher levels of social support, which can positively influence their overall well-being. Spirituality and religiosity can play a role in strengthening marital bonds and providing emotional and practical support. This suggests that marital status impacts physical health outcomes. This suggests that marital status impacts physical health outcomes. The survey responses reflect that 53% respondents are married, 27% are single, and 19% are divorced, with 1 respondent being widowed. These percentages generally reflect marriage status within the UK in 2021 for single and married populations. Our sample contains a higher proportion of divorced participants and a lower proportion of widowed participants compared to the national average. Average age of respondents and accessibility of the survey to older populations may have affected the response rate of widowed participants. In general, we can assume that our sample is reflective of the marital status across the population. 
 
 #### Denomination
 ```{r}
 ggplot(camdata_clean, aes(x=denom, fill = denom))+ 
   geom_bar()+ 
-  labs(title = "Religious Denomination", x = "Denomination", y = "Count" )+ 
+  labs(title = "Religious Denomination Distribution", x = "Denomination", y = "Count", fill="Denomination")+ 
   theme(axis.text.x.bottom = element_text(angle = 45, hjust = 0.9))
 ```
 
-[Anaylis here]
+[Anaylis here - 50 Protestant]
 
 #### How Religious or How Spiritual
-```{r, figures-side, fig.show='hold', out.width="50%"}
-ggplot(camdata_clean, aes(x=relpersn, fill = relpersn))+  
+```{r}
+##install.packages(ggpubr)
+library(ggpubr)
+
+howreligious <- ggplot(camdata_clean, aes(x=relpersn, fill = relpersn))+  
   geom_bar()+ 
   scale_fill_manual(values = c("cadetblue2", "burlywood2", "brown2", "coral2"))+ 
-  labs(title = "Religious Level", x = "Level of Religiousity", y = "Count")+
+  labs(title = "Self-Rated Religious Level", x = "Level of Religiousity", y = "Count", fill="Religiousity Scale")+
   theme(axis.text.x.bottom = element_text(size = 7.75))
 
-ggplot(camdata_clean, aes(x=sprtprsn, fill = sprtprsn))+ 
+howspiritual <- ggplot(camdata_clean, aes(x=sprtprsn, fill = sprtprsn))+ 
   geom_bar()+ 
   scale_fill_manual(values = c("cadetblue2", "burlywood2", "brown2", "coral2"))+ 
-  labs(title = "Spiritual Level", x = "Level of Spirituality", y = "Count")+
+  labs(title = "Self-Rate Spiritual Level", x = "Level of Spirituality", y = "Count", fill="Spirituality Scale")+
   theme(axis.text.x.bottom = element_text(size = 7.75))
+
+ggarrange(howreligious, howspiritual,
+         ncol=1, nrow=2)
 ```
 
 [Analysis here]
 
 ### Analysis
 
-####Scatterplot
+#### Quantifying Health
+We are interested in the intersection of religious and spiritual practices with physical and psychological health. Currently, all variables measuring health (both physical and psychological) are coded as factor variables, with levels "Not at all", "A little bit", "Moderately", "Quite a bit", and "Extremely" for rating the severity of these symptoms. In order to perform a detailed statistical analysis regarding the relationship between health and spirituality, we must first **quantify health symptoms** reported by these patients. This will allows us to measure "health" across different groups while still maintaining the integrity of survey responses. Quantifying health symptoms allows us the calculate the "average" health across groups and gives us a wider range of plots in order to assess our data. In order to quantify data, we must convert these factor variables into numerical variables. 
+
 ```{r}
-attach(camdata_clean)
+#physical health symptoms
+  #appetite
+camdata_clean$poor_appetite_num <- camdata_clean$poor_appetite
+levels(camdata_clean$poor_appetite_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$poor_appetite_num <- as.numeric(as.character(camdata_clean$poor_appetite_num))
+
+  #nausea
+camdata_clean$nausea_num <- camdata_clean$nausea
+levels(camdata_clean$nausea_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$nausea_num <- as.numeric(as.character(camdata_clean$nausea_num))
+
+  #weakness
+camdata_clean$weakness_num <- camdata_clean$weakness
+levels(camdata_clean$weakness_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$weakness_num <- as.numeric(as.character(camdata_clean$weakness_num))
+
+  #physical (combined)
+camdata_clean$physical_health <- rowMeans(cbind(camdata_clean$poor_appetite_num, camdata_clean$nausea_num, camdata_clean$weakness_num), na.rm=T)
+
+#psychological health symptoms
+  #blameothers
+camdata_clean$blameothers_num <- camdata_clean$blameothers
+levels(camdata_clean$blameothers_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$blameother_num <- as.numeric(as.character(camdata_clean$blameothers_num))
+
+  #lonely
+camdata_clean$lonely_num <- camdata_clean$lonely
+levels(camdata_clean$lonely_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$lonely_num <- as.numeric(as.character(camdata_clean$lonely_num))
+
+  #mindwrong
+camdata_clean$mindwrong_num <- camdata_clean$mindwrong
+levels(camdata_clean$mindwrong_num) <- c(0, 1, 2, 3, 4)
+camdata_clean$mindwrong_num <- as.numeric(as.character(camdata_clean$mindwrong_num))
+
+  #psychological (combined)
+camdata_clean$psych_health <- rowMeans(cbind(camdata_clean$blameothers_num, camdata_clean$lonely_num, camdata_clean$mindwrong_num), na.rm=T)
+
+#health (combined)
+camdata_clean$health_total <- rowMeans(cbind(camdata_clean$physical_health, camdata_clean$psych_health), na.rm=T)
+```
+
+#### Physical Health vs. Psychological Health
+Before delving into the relationship between spirituality and health, we should first measure whether there is a correlation between physical and psychological health. [Continue here.]
+```{r}
+##physical vs psychological health
+ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
+  geom_point(position="jitter")+
+  geom_smooth(color="blue4")+
+  labs(x="Physical Health Score", y="Psychological Health Score", title="Psychological vs. Physical Health in Survey Responses")
+
+```
 ```
 
 
