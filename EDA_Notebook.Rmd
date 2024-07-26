@@ -164,6 +164,7 @@ howspiritual <- ggplot(camdata_clean, aes(x=sprtprsn, fill = sprtprsn))+
 ggarrange(howreligious, howspiritual,
          ncol=1, nrow=2)
 ```
+[Analysis here - most people do not consider themselves religious but do consider themselves spiritual. explore differences between religion vs spirituality and what practices might differ]
 
 #### Private Pray
 
