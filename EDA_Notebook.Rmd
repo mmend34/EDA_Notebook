@@ -216,15 +216,58 @@ camdata_clean$health_total <- rowMeans(cbind(camdata_clean$physical_health, camd
 ```
 
 #### Physical Health vs. Psychological Health
-Before delving into the relationship between spirituality and health, we should first measure whether there is a correlation between physical and psychological health. [Continue here.]
+Before delving into the relationship between spirituality and health, we should first measure whether there is a correlation between physical and psychological health. This will help us with our future analysis in comparing the physical and psychological health of different subgroups when assessing the impact of spiritual and religious practices. 
 ```{r}
 ##physical vs psychological health
 ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
   geom_point(position="jitter")+
   geom_smooth(color="blue4")+
   labs(x="Physical Health Score", y="Psychological Health Score", title="Psychological vs. Physical Health in Survey Responses")
-
 ```
+[Analysis - they are correlated.]
+
+#### Spiritual vs. Religious - Health Effects
+Two of our variables assess the self-ranking of respondents on how religious and how spiritual they consider themselves to be. We used this as a benchmark to assess the "religiousness" and "spirituality" of respondents. [Continue here]
+
+```{r}
+##spiritual with psych vs. religious
+##spiritual with physical vs. religious
+##camdata_clean %>%
+  filter(relprsn=="Moderately religious" | relprsn=="Very religious") %>%
+summary(camdata_clean$relprsn)
+##still figuring out
+```
+[Analysis here]
+
+#### How Does Marital Status Affect Health Symptoms? 
+Our survey contains a 
+```{r}
+##marital status vs health
+camdata_clean %>%
+  ggplot(aes(x=mrtlstus, y=health_total, fill=mrtlstus))+
+  geom_bar(stat="summary", fun="mean")+
+  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+ 
+  labs(x="Marital Status", y="Average Health Score", title="Average Health Score by Marital Status")
+```
+[Analysis - in terms of general health, marriage predicts a lower average health score (aka better ratings]
+
+But what about physical vs. psych? 
+```{r}
+##marital status vs health (physical/psych)
+physvsmrtl <- camdata_clean %>%
+  ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus))+
+  geom_bar(stat="summary", fun="mean")+
+  scale_fill_manual(values = c("darkolivegreen3", "lightskyblue1", "brown3", "lightpink1"))+
+  labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score by Marital Status")
+
+psychvsmrtl <- camdata_clean %>%
+  ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus))+
+  geom_bar(stat="summary", fun="mean")+
+  scale_fill_manual(values = c("darkolivegreen3", "lightskyblue1", "brown3", "lightpink1"))+
+  labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score by Marital Status")
+
+ggarrange(physvsmrtl, psychvsmrtl,
+          ncol=2, nrow=1)
 ```
 
 
