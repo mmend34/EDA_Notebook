@@ -257,13 +257,13 @@ But what about physical vs. psych?
 physvsmrtl <- camdata_clean %>%
   ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus))+
   geom_bar(stat="summary", fun="mean")+
-  scale_fill_manual(values = c("darkolivegreen3", "lightskyblue1", "brown3", "lightpink1"))+
+  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+
   labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score by Marital Status")
 
 psychvsmrtl <- camdata_clean %>%
   ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus))+
   geom_bar(stat="summary", fun="mean")+
-  scale_fill_manual(values = c("darkolivegreen3", "lightskyblue1", "brown3", "lightpink1"))+
+  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+
   labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score by Marital Status")
 
 ggarrange(physvsmrtl, psychvsmrtl,
