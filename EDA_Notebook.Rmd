@@ -165,15 +165,17 @@ ggarrange(howreligious, howspiritual,
          ncol=1, nrow=2)
 ```
 
+#### Private Pray
+
 [Analysis here]
 
 ### Analysis
 
 #### Quantifying Health
-We are interested in the intersection of religious and spiritual practices with physical and psychological health. Currently, all variables measuring health (both physical and psychological) are coded as factor variables, with levels "Not at all", "A little bit", "Moderately", "Quite a bit", and "Extremely" for rating the severity of these symptoms. In order to perform a detailed statistical analysis regarding the relationship between health and spirituality, we must first **quantify health symptoms** reported by these patients. This will allows us to measure "health" across different groups while still maintaining the integrity of survey responses. Quantifying health symptoms allows us the calculate the "average" health across groups and gives us a wider range of plots in order to assess our data. In order to quantify data, we must convert these factor variables into numerical variables. 
+We are interested in the intersection of religious and spiritual practices with physical and psychological health. Currently, all variables measuring health (both physical and psychological) are coded as factor variables, with levels "Not at all", "A little bit", "Moderately", "Quite a bit", and "Extremely" for rating the severity of these symptoms. In order to perform a detailed statistical analysis regarding the relationship between health and spirituality, we must first **quantify health symptoms** reported by these patients. This will allows us to measure "health" across different groups while still maintaining the integrity of survey responses. Quantifying health symptoms allows us the calculate the "average" health across groups and gives us a wider range of plots in order to assess our data. In order to quantify data, we must convert these factor variables into numerical variables. For the purposes of converting these variables, 0 will represent "Not at all", 1 will represent "A little bit", 2 will represent "Moderately", 3 will represent "Quite a bit", and 4 will represent "Extremely". A lower "health score" will correlate with a person reporting less severe symptoms, or a "healthier" respondent. 
 
 ```{r}
-#physical health symptoms
+#physical health symptoms - appetite, nausea, weakness
   #appetite
 camdata_clean$poor_appetite_num <- camdata_clean$poor_appetite
 levels(camdata_clean$poor_appetite_num) <- c(0, 1, 2, 3, 4)
@@ -192,7 +194,8 @@ camdata_clean$weakness_num <- as.numeric(as.character(camdata_clean$weakness_num
   #physical (combined)
 camdata_clean$physical_health <- rowMeans(cbind(camdata_clean$poor_appetite_num, camdata_clean$nausea_num, camdata_clean$weakness_num), na.rm=T)
 
-#psychological health symptoms
+
+#psychological health symptoms - blameothers, lonely, mindwrong
   #blameothers
 camdata_clean$blameothers_num <- camdata_clean$blameothers
 levels(camdata_clean$blameothers_num) <- c(0, 1, 2, 3, 4)
@@ -211,12 +214,14 @@ camdata_clean$mindwrong_num <- as.numeric(as.character(camdata_clean$mindwrong_n
   #psychological (combined)
 camdata_clean$psych_health <- rowMeans(cbind(camdata_clean$blameothers_num, camdata_clean$lonely_num, camdata_clean$mindwrong_num), na.rm=T)
 
-#health (combined)
+
+#health (combined) - combining health scores of both physical and psychological symptoms
 camdata_clean$health_total <- rowMeans(cbind(camdata_clean$physical_health, camdata_clean$psych_health), na.rm=T)
 ```
 
 #### Physical Health vs. Psychological Health
-Before delving into the relationship between spirituality and health, we should first measure whether there is a correlation between physical and psychological health. This will help us with our future analysis in comparing the physical and psychological health of different subgroups when assessing the impact of spiritual and religious practices. 
+Before delving into the relationship between spirituality and health, we should first measure whether there is a correlation between physical and psychological health. This will help us with our future analysis in comparing the physical and psychological health of different subgroups when assessing the impact of spiritual and religious practices. While physical and psychological symptoms are distinct, physical maladies can certainly lead to a lower quality of life and feelings of loneliness and helplessness. We predict at least a small correlation, if not a significant relationship between a person's physical and psychological health. 
+
 ```{r}
 ##physical vs psychological health
 ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
@@ -224,10 +229,10 @@ ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
   geom_smooth(color="blue4")+
   labs(x="Physical Health Score", y="Psychological Health Score", title="Psychological vs. Physical Health in Survey Responses")
 ```
-[Analysis - they are correlated.]
+[Analysis - they are correlated. we expect this relationship to persist in our further analysis when introducing spirituality and religion.]
 
 #### Spiritual vs. Religious - Health Effects
-Two of our variables assess the self-ranking of respondents on how religious and how spiritual they consider themselves to be. We used this as a benchmark to assess the "religiousness" and "spirituality" of respondents. [Continue here]
+Two of our variables assess the self-ranking of respondents on how religious and how spiritual they consider themselves to be. We used this as a benchmark to assess the "religiousness" and "spirituality" of respondents. [Continue here.]
 
 ```{r}
 ##spiritual with psych vs. religious
@@ -240,7 +245,7 @@ summary(camdata_clean$relprsn)
 [Analysis here]
 
 #### How Does Marital Status Affect Health Symptoms? 
-Our survey contains a 
+As we discussed previously, the marital status of an individual can reflect an individual's spiritual beliefs and practices, providing insight into a person's emotional and physical well-being. Married individuals tend to place more value of spiritual and religious beliefs, which in turn can strengthen marital bonds and introduce central values within couples. As we assessed prior, our survey responses contains a good mix of single, married, and divorced respondents representative of UK populations. By assessing the relationship between marital status and health, we are given insight as to how one's emotional support system can predict health and well-being. 
 ```{r}
 ##marital status vs health
 camdata_clean %>%
@@ -249,9 +254,11 @@ camdata_clean %>%
   scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+ 
   labs(x="Marital Status", y="Average Health Score", title="Average Health Score by Marital Status")
 ```
-[Analysis - in terms of general health, marriage predicts a lower average health score (aka better ratings]
+[Analysis - in terms of general health, marriage predicts a lower average health score (aka better ratings.]
 
-But what about physical vs. psych? 
+##### Marital Status and Health Symptoms - Physical vs. Psychological
+We've established that marital status predicts the severity of health symptoms, with married individuals scoring much lower in their average health score. However, the measurement we used, the "average health score" factors in all physical and psychological symptoms we previously selected - poor appetite, nausea, weakness, feeling others are to blame, feelings of loneliness, and feeling that something is wrong with one's mind. While marriage provides a significant emotional support system that might alleviate feelings of loneliness and blame, marriage is not directly linked to helping physical symptoms like nausea and weakness. Comparing how marital status predicts the severity of physical vs. psychological symptoms can provide insight into how the religious and spiritual aspects of marriage and partnership affect health symptoms. 
+
 ```{r}
 ##marital status vs health (physical/psych)
 physvsmrtl <- camdata_clean %>%
@@ -269,18 +276,6 @@ psychvsmrtl <- camdata_clean %>%
 ggarrange(physvsmrtl, psychvsmrtl,
           ncol=2, nrow=1)
 ```
+[Analysis - not much difference between physical and psychological health. the correlation between physical and psychological health persists. not sure whether this is because this correlation between physical and psych is strong of because marriage helps alleviate physical symptoms. "Further analysis on how these respondents engage in spiritual/religious practices and how their marriage discourages/enables these rituals is needed." ]
 
-
-Plans: huge difference in gender (women 112> men 17)
-most are not religious (50) but very spiritual (45)
-90 nothing is wrong with mind
-50 protestant
-most are married
-most never have private practice
-
-want to create and analyze charts/graphs (maybe more)
-spiritual person w/ psychological problems vs religious
-spiritual person w/ physical problems vs religious
-mrtstus effect on health problems 
-belgdwth effect on health problems
-
+### Conclusion
