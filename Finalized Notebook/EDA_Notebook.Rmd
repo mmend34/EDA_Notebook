@@ -357,9 +357,17 @@ Marital status can significantly influence an individual's spiritual beliefs and
 ##marital status vs health
 camdata_clean %>%
   ggplot(aes(x=mrtlstus, y=health_total, fill=mrtlstus))+
-  geom_bar(stat="summary", fun="mean")+
-  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+ 
-  labs(x="Marital Status", y="Average Health Score", title="Average Health Score by Marital Status")
+   geom_boxplot(show.legend=F,
+               outlier.shape = NA)+
+    geom_jitter(width = 0.25, show.legend=F, size=1)+
+    scale_fill_manual(values = c("skyblue", "cornflowerblue", "dodgerblue3", "lavender"))+
+   labs(x="Marital Status", y="Overall Health Score", title="Overall Health Score by Marital Status")+
+    theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
+        axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
+        axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
+        axis.text.x.bottom = element_text(
+          family = "serif", size = 11),
+        axis.text.y = element_text(family = "serif", size = 11))
 ```
 
 Combining both physical and psychological health metrics, marital status emerges as a significant predictor of overall health severity. Married respondents reported a notably lower average health severity score, reflecting less severe health symptoms compared to their single and divorced counterparts. Specifically, married individuals had a median severity score of approximately 0.5, which falls between the “Not at all” and “A little bit” ranges. In contrast, single and divorced respondents both reported median scores around 1, corresponding to the “A little bit” range. Given that the median overall health severity score for the entire sample was below 1, these findings are particularly striking. Single and divorced individuals rated their overall health more severely than the average participant, suggesting that marital status plays a crucial role in health outcomes. The data indicates that married individuals are more likely to report less severe health symptoms, which implies that marital status can be a useful predictor of health severity. Further analysis is needed to explore the differences in ratings between physical and psychological symptoms, to better understand how marital status influences various dimensions of health.
@@ -375,27 +383,33 @@ library(gridExtra)  # For ggarrange function
 
 # Plot for Physical Health vs Marital Status
 physvsmrtl <- camdata_clean %>%
-  ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus)) +
-  geom_bar(stat="summary", fun="mean", width=0.7) +  # Adjust bar width
-  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) +
-  labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotate x-axis labels
-        axis.title = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10))
+  ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus))+
+   geom_boxplot(show.legend=F,
+               outlier.shape = NA)+
+    geom_jitter(width = 0.25, show.legend=F, size=1)+
+    scale_fill_manual(values = c("skyblue", "cornflowerblue", "dodgerblue3", "lavender"))+
+   labs(x="Marital Status", y="Overall Health Score", title="Overall Health Score by Marital Status")+
+    theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
+        axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
+        axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
+        axis.text.x.bottom = element_text(
+          family = "serif", size = 11, angle = 45, hjust = 1),
+        axis.text.y = element_text(family = "serif", size = 11))
 
 # Plot for Psychological Health vs Marital Status
 psychvsmrtl <- camdata_clean %>%
-  ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus)) +
-  geom_bar(stat="summary", fun="mean", width=0.7) +  # Adjust bar width
-  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) +
-  labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotate x-axis labels
-        axis.title = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        legend.title = element_text(size = 12),
-        legend.text = element_text(size = 10))
+  ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus))+
+   geom_boxplot(show.legend=F,
+               outlier.shape = NA)+
+    geom_jitter(width = 0.25, show.legend=F, size=1)+
+    scale_fill_manual(values = c("skyblue", "cornflowerblue", "dodgerblue3", "lavender"))+
+   labs(x="Marital Status", y="Overall Health Score", title="Overall Health Score by Marital Status")+
+    theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
+        axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
+        axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
+        axis.text.x.bottom = element_text(
+          family = "serif", size = 11, angle = 45, hjust = 1),
+        axis.text.y = element_text(family = "serif", size = 11))
 
 # Arrange plots side by side
 ggarrange(physvsmrtl, psychvsmrtl, ncol=2, nrow=1)
@@ -406,7 +420,7 @@ The patterns observed in physical and psychological health severity scores refle
 Recognizing the personalized nature of spiritual care, we seek to define and provide specific examples of religious and spiritual care that improve patient outcomes to implement into healthcare and patient treatments. One such example is implementing instances of private pray into one's daily routine, specifically for those who already define as religious. Private pray can help create a space for self-examination and confession for individuals honestly express their challenges and their hopes. Studies have shown that frequent private prayer is linked to significant benefits for mental health issues. We aim to examine the relationship between frequency of private pray and psychological health within this study. 
 
 ```{r}
-install.packages("paletteer")
+#install.packages("paletteer")
 library(paletteer)
 
 camdata_clean %>%
