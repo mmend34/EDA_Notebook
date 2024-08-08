@@ -411,7 +411,7 @@ library(paletteer)
 
 camdata_clean %>%
   filter(!is.na(prvtpry),
-         relpersn==3 | relpersn==4) %>%
+         relpersn=="Moderately Religious" | relpersn=="Very religious") %>%
   group_by(prvtpry) %>%
   summarize(psychhealth_avg=mean(psych_health)) %>%
   ggplot(aes(x=prvtpry, y=psychhealth_avg, fill=prvtpry))+
