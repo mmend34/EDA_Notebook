@@ -11,18 +11,15 @@ library(tidyverse)
 ```
 
 ### Introduction & Motivation
-The CAM and Spirituality, Religiosity dataset is from the Association of Religion Data Archives (ARDA) which studies the effect of spirituality on health based on various factors on chronically ill patients from a private medical clinic in Southampton, UK. Some of the correlations include spiritual and meditative practice, spiritual experiences, personal values, spiritual coping, and religious support. Topics for health measures include mindfulness when facing current problems. 
+The CAM and Spirituality, Religiosity dataset, sourced from the Association of Religion Data Archives (ARDA), examines the impact of spirituality on health among chronically ill patients from a private medical clinic in Southampton, UK. This dataset encompasses various dimensions of spirituality, including spiritual and meditative practices, personal values, spiritual coping strategies, and religious support. Additionally, it explores health measures related to mindfulness and overall coping when facing health challenges. In the context of modern medicine, which predominantly employs Western techniques, there is a growing need to consider the contrasting spiritual approaches found in alternative medicine. The integration of spirituality into healthcare is often overlooked in contemporary medical practices. This dataset aims to investigate whether specific spiritual practices or beliefs correlate with enhanced mental and physical health, reduced stress levels, or improved coping mechanisms. The insights derived from this dataset are highly relevant for healthcare professionals and therapists seeking  alternative treatment methods and strategies outside normative medical practices. The findings could inform holistic healthcare policies that integrate spirituality into patient care, influence educational programs on self-care in public schools, reshape treatment strategies for severely injured patients, and enhance mental health approaches in workplace settings. By acknowledging the role of spirituality in overall well-being, this research has the potential to shape more inclusive and comprehensive healthcare practices. 
 
-Since modern medicine is dominated by more Western techniques, contrasting the more spiritual focus of Eastern medicine, understanding the relationship between spirituality and health is an important aspect to consider that is often disregarded in medical environments today. This dataset explores whether certain spiritual practices or beliefs are associated with better mental and physical health, reduced stress, or improved coping mechanisms. What is found in this dataset can be relevant to current healthcare providers and therapists searching for alternative treatment methods and strategies outside normative medical practices. Notably, findings could influence policies related to holistic healthcare approaches that acknowledge the role of spirituality in patient well-being and target audiences that may not seem as traditional, including how self-care is taught in public school systems, how severely injured patients are treated, and how mental health is dealt with in the workplace. 
-
-
-### About The Dataset
+### Dataset Collection Methodology: Survey Questionaire
 The principal investigators Niko Kohls, Harald Walach, and George Lewish sent out their questionnaires to a randomized population of patients who met the following three criteria: undergone treatment within a 3 year mark, older than the the age of 18, and had a diagnosis of either migraines, irritable bowel, or chronic fatigue syndrome. The respondents consisted of 71 cases with chronic fatigue (65%), 29 (27%) individuals with an irritable bowel syndrome as well as 9 (8%) patients suffering from migraines, totaling to 130 respondents.
 
-Six hundred questionnaires were originally mailed to the patients. With a response rate of 18.5%, 111 questionnaires were successfully completed. The survey questions focused on the impact of patients' spirituality and their overall physical health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The final dataset consisted of 258 total variables, from 254 initially, and 130 respondents for a better understanding of the subject matter. For our project’s more focused analysis, the variable count has been reduced to 13 variables. By concentrating on the factors that would best describe our sample and their relationship with religion/spiritual practices, such as marital status, religious/ spiritual self-ranking, and their physical and mental health, we developed a more direct approach towards understanding the correlation between spirituality and health. 
+Six hundred questionnaires were originally mailed to the patients. With a response rate of 18.5%, 111 questionnaires were successfully completed. The survey questions focused on the impact of patients' spirituality and their overall physical health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The final dataset consisted of 258 total variables, from 254 initially, and 130 respondents for a better understanding of the subject matter. For this project’s more focused analysis, the variable count has been reduced to 13 variables. By concentrating on the factors that would best describe a sample and their relationship with religion/spiritual practices, a more direct approach towards understanding the correlation between spirituality and health was developed. 
 
-### Defining Variables
-The original data set consists of 130 responses to 258 variables. To narrow our analysis to the factors that best describe respondents’ spiritual practices and health, 13 variables were chosen in order to rid of repetitive patterns. Within the 13 remaining variables, three categories were created in order to differentiate between them. The categories consist of: spirituality and/or religion, effects on an individual’s physical health, and demographic data. 
+### Defining Chosen Variables 
+The original data set consists of 130 responses to 258 variables. To narrow our analysis to the factors that best describe respondents’ spiritual practices and health, 13 variables were chosen in order to avoid repetitive patterns and create a more cohesive dataset. Within the 13 remaining variables, three categories were created in order to differentiate between them. The categories consist of: spirituality and/or religion, effects on an individual’s physical health, and demographic data. 
 
 * For the **spiritual and religious** category, the following variables are as defined: 
     * *belgdwth* refers to the survey question "I believe in a God who watches over me",
@@ -36,11 +33,10 @@ The original data set consists of 130 responses to 258 variables. To narrow our 
     * *DISTRS04*: feelings others are to blame for most of your troubles,
     * *DISTRS16*: feeling lonely,
     * *DISTRS53*: the idea that something is wrong with your mind. 
-* As for the personal data category, the variables chosen are:
+* As for the **personal data category**, the variables chosen are:
     * *gender*: female or male, 
     * *mrtlstus*: marital status (single, married, divorced,  or widowed), 
     * and *denom*: denomination. 
-
 
 #### Rationale for Selecting Variables
 Given the abundant amount of original variables, the elected variables were selected carefully. The variables *belgwth*, *prvtpry*, *relpersn*, and *sprtprsn* are variables that were chosen to determine the level to which a participant may be spiritual or religious, determining how strong the correlation between their spirituality and health would be: 
@@ -56,7 +52,7 @@ The next set of variables relate to a participant's current health issues. They 
 
 The last set of variables were demographic variables to get to know the data set population. These variables include gender, marital status, and denomination. Ultimately, these variables were chosen to illuminate any findings on the health relationships between the spiritual and physical in hopes to offer a shorter but to some extent holistic approach. 
 
-(While creating our new dataset, we renamed certain variables for clarity during data analysis as follows: 
+Note: While creating our new dataset, certain variables were renamed for clarity during data analysis as follows: 
 
 * *belgdwth* to *godwatches*
 * *DISTRS11* to *poor_appetite*,
@@ -65,7 +61,6 @@ The last set of variables were demographic variables to get to know the data set
 * *DISTRS04* to *blameothers*,
 * *DISTRS16* to *lonely*,
 * *DISTRS53* to *mindwrong*.)
-
 
 ```{r}
 #load data set
@@ -118,7 +113,7 @@ save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook
 ```
 
 ### Getting to Know the Participants
-#### Differences in Gender
+#### Gender Disparity
 ```{r}
 library(ggplot2)
 ggplot(camdata_clean, aes(x=gender, fill = gender))+ 
@@ -127,9 +122,9 @@ ggplot(camdata_clean, aes(x=gender, fill = gender))+
   labs(title = "Gender Count in Survey Responses", x="Gender", y="Count", fill="Gender")
 ```
 
-A notable gender disparity can be observed within the data set. The survey responses were predominantly from women, who made up 112 of the responses, compared to the men that represented a much smaller percentage with only 17 respondents. One remaining respondent did not provide a direct answer to the question. This stark difference in gender raises important sample considerations, including voluntary response bias. The imbalance suggests that women are more likely to participate in surveys about spirituality, religiosity, or health than men, possibly because they are more involved in spiritual or religious practices and more willing to share their beliefs in surveys. Notably, the small number of male respondents limits the ability to generalize findings across the general population. However, despite the imbalance, the data still provides valuable insights into how spirituality and religiosity influences health in the human body and its nervous system. 
+The dataset reveals a significant gender disparity, with a predominance of female respondents. Out of 130 total responses, 112 are from women, while only 17 are from men. One respondent did not specify their gender. This notable imbalance raises important considerations regarding sample representation and potential response bias. The disproportion suggests that women are more likely to engage in surveys related to spirituality, religiosity, or health. This could be attributed to higher involvement in spiritual or religious practices among women, as well as a greater willingness to disclose personal beliefs and health experiences in surveys. The limited number of male respondents constrains the ability to generalize findings to the broader population. Despite this imbalance, the data provides valuable insights into the relationship between spirituality, religiosity, and health. The findings contribute to understanding how these factors influence well-being, particularly in the context of the human body and its nervous system.
 
-#### Marital Status
+#### Marital Status and Its Implications
 ```{r}
 ggplot(camdata_clean, aes(x=mrtlstus, fill = mrtlstus))+ 
   geom_bar()+ 
@@ -137,9 +132,9 @@ ggplot(camdata_clean, aes(x=mrtlstus, fill = mrtlstus))+
   labs(title = "Marital Status Distribution in Survey Responses", x = "Status", y = "Count", fill="Marital Status")
 ```
 
-Marital status provides insights into how personal relationships affect spiritual beliefs and practices. Married individuals typically have more social support, which enhances their well-being. Spirituality and religiosity can strengthen marital bonds, offering emotional and practical support, and thus positively impact physical health outcomes. The survey responses reflect that 53% of respondents are married, 27% are single, and 19% are divorced, with 1 respondent being widowed. These percentages generally reflect marriage status within the UK in 2021 for single and married populations. Our sample contains a higher proportion of divorced participants and a lower proportion of widowed participants compared to the national average. The average age of respondents and accessibility of the survey to older populations may have affected the response rate of widowed participants. In general, we can assume that our sample is relatively reflective of the married demographic across the population within the UK. 
+Marital status offers valuable insights into how personal relationships influence spiritual beliefs and practices. Typically, married individuals benefit from enhanced social support, which can positively affect their overall well-being. Spirituality and religiosity often play a role in strengthening marital bonds, providing both emotional and practical support, which can, in turn, improve physical health outcomes. According to the survey, 53% of respondents are married, 27% are single, 19% are divorced, and 1% are widowed. These proportions are generally consistent with the marriage status distribution in the UK as of 2021 for single and married populations. However, our sample shows a higher percentage of divorced individuals and a lower percentage of widowed individuals compared to national averages. This discrepancy may be attributed to the average age of respondents and the accessibility of the survey, which could have influenced the representation of widowed participants. Overall, while the sample is somewhat skewed, it still provides a reasonable reflection of the married demographic within the UK population. The findings highlight the significant role that marital status can play in shaping spiritual practices and their associated health benefits.
 
-#### Denomination
+#### Religious Denominations of Participants
 ```{r}
 ggplot(camdata_clean, aes(x=denom, fill = denom))+ 
   geom_bar()+ 
@@ -147,9 +142,11 @@ ggplot(camdata_clean, aes(x=denom, fill = denom))+
   theme(axis.text.x.bottom = element_text(angle = 45, hjust = 0.9))
 ```
 
-When specifically analyzing the religious denominations of our participants, we see that 50 respondents were Protestant, followed by nearly 30 individuals stating they are in no denomination. The religious landscape in the UK has changed significantly in recent years. According to the 2021 Census for England and Wales, the largest group identifies as having no religion (46.2%), followed by Christians at 37.2%. Other religions include Muslims (6.5%), Hindus (1.7%), Sikhs (0.9%), Jews (0.5%), and Buddhists (0.5%)​. Because the survey was only administered at one private medical clinic in Southampton, it is likely that the religious denomination distribution from respondents were not entirely reflective of that of the UK. It is probable that this was due to the clinic being located in an area with more Protestants. Additionally, we must also consider response bias, as those more involved in the religious and spiritual spheres of life are more inclined to participate in this survey. 
+In analyzing the religious affiliations of our survey participants, it was discovered that 50 respondents identified as Protestant, while nearly 30 participants reported no religious affiliation. This distribution contrasts with broader religious trends in the UK. According to the 2021 Census for England and Wales, the largest demographic identifies as having no religion (46.2%), followed by Christians at 37.2%. Other religious affiliations include Muslims (6.5%), Hindus (1.7%), Sikhs (0.9%), Jews (0.5%), and Buddhists (0.5%).
 
-#### How Religious or How Spiritual
+The survey, conducted at a single private medical clinic in Southampton, may not fully represent the national religious landscape. The local demographics and the clinic's geographical location, which may have a higher concentration of Protestants, could have influenced the respondent distribution. Furthermore, response bias should be considered, as individuals more engaged in religious and spiritual practices might have been more inclined to participate in the survey.
+
+#### Levels of Religiousness and Spirituality
 ```{r}
 ##install.packages(ggpubr)
 library(ggpubr)
@@ -169,14 +166,18 @@ howspiritual <- ggplot(camdata_clean, aes(x=sprtprsn, fill = sprtprsn))+
 ggarrange(howreligious, howspiritual,
          ncol=1, nrow=2)
 ```
-Interestingly enough, when asked to rate their levels of religiousness and spirituality, responses reflected opposing trends: nearly 90 respondents see themselves as moderately to very spiritual, and approximately 40 see themselves as moderately to very religious. The participants view themselves as  less religious and more spiritual overall. This is important to keep in mind when later analyzing overall physical and psychological health. 
 
-According to the Harvard Divinity School, Pew Research Center, and Psychology Today, the main differences between being religious and spiritual is the following: being religious is more about structured practices like observing holidays and following specific rites and ceremonies, following sacred texts, and recognizing the authority of religious leaders and institutions, whereas spirituality is more about an individual’s personal experience, rather than following established norms. In spirituality, there is significantly more flexibility. A person can explore their own being in a less structured manner, for example through meditation, yoga, mindfulness, personal reflection, and a connection with nature. One’s spiritual experiences may be drawn from various cultures and religions, and is focused on personal growth and their journey in life. Spirituality focused more on being a human through universal concepts like love, compassion, and interconnectedness. 
+The survey results reveal a notable distinction between participants' self-perceived levels of spirituality and religiosity. Approximately 90 respondents identified themselves as moderately to very spiritual, while around 40 described themselves as moderately to very religious. This trend indicates that participants generally view themselves as more spiritual than religious. This distinction is significant for subsequent analyses of physical and psychological health, as it highlights different dimensions of personal belief systems. According to sources such as Harvard Divinity School, Pew Research Center, and Psychology Today, the key differences between religiosity and spirituality are as follows:
 
-### Analysis
+* Religiosity typically involves structured practices such as observing religious holidays, adhering to specific rites and ceremonies, following sacred texts, and recognizing the authority of religious leaders and institutions.
+* Spirituality, in contrast, emphasizes personal experience and individual exploration. It is characterized by flexibility and can include practices such as meditation, yoga, mindfulness, personal reflection, and a connection with nature. Spirituality often draws from various cultural and religious traditions and focuses on personal growth, universal values such as love, compassion, and interconnectedness, and one's journey in life.
+
+Understanding these distinctions is crucial for interpreting how spirituality and religiosity may impact overall health and well-being. The emphasis on spirituality over religiosity among participants may influence their health outcomes and experiences in different ways.
+
+### Insights and Interpretation
 
 #### Quantifying Health
-We are interested in exploring how religious and spiritual practices relate to physical and psychological health. Currently, health variables are coded as factor variables, with symptom severity measured in levels from "Not at all", "A little bit", and "Moderately", to "Quite a bit", and "Extremely." To conduct a detailed statistical analysis, we decided to **quantify health symptoms** by converting these factor variables into numerical values. This quantification allows us to measure "health" consistently across different groups, calculate average health scores, and generate various plots for data assessment, all while maintaining the integrity of survey responses.
+This study aims to explore the relationship between religious and spiritual practices and both physical and psychological health. In the dataset, health variables are coded as factor variables, with symptom severity categorized into levels: "Not at all," "A little bit," "Moderately," "Quite a bit," and "Extremely." To enable a detailed statistical analysis, health symptoms are quantified by converting these categorical variables into numerical values. This quantification facilitates consistent measurement of health across different respondent groups, allows for the calculation of average health scores, and supports the generation of various plots for data visualization and assessment. This approach preserves the integrity of the survey responses while providing a rigorous framework for analysis.
 
 ```{r}
 #physical health symptoms - appetite, nausea, weakness
@@ -224,24 +225,27 @@ camdata_clean$health_total <- rowMeans(cbind(camdata_clean$physical_health, camd
 ```
 
 #### Physical Health vs. Psychological Health
-Before delving into the relationship between spirituality and health, we should first determine if there is a correlation between physical and psychological health. Establishing this relationship is crucial for comparing the health of different subgroups when assessing the impact of spiritual and religious practices. Although physical and psychological symptoms are distinct, physical ailments can lead to lower quality of life and feelings of loneliness and helplessness, and vice versa. We anticipate finding at least a small, if not significant, correlation between a person's physical and psychological health. 
+Before delving into the relationship between spirituality and health, it is essential to first establish whether a correlation exists between physical and psychological health.  Establishing this relationship is crucial for comparing the health of different subgroups when assessing the impact of spiritual and religious practices. Although physical and psychological symptoms are distinct, physical ailments can lead to lower quality of life and feelings of loneliness and helplessness, and vice versa. It is anticipated that there will be at least a modest, if not significant, correlation between physical and psychological health. This preliminary analysis will provide a foundation for assessing how spiritual and religious practices impact overall well-being.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ##physical vs psychological health
 ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
   geom_point(position="jitter")+
   geom_smooth(color="blue4")+
   labs(x="Physical Health Score", y="Psychological Health Score", title="Psychological vs. Physical Health in Survey Responses")
 ```
-Upon further analysis, the plot demonstrates that the physical and psychological health severity are in fact correlated, however we cannot fully grasp how strong the correlation is due to only 130 responses out of an intended 600. A majority of survey participants have a low severity score, closer to zero on a range from zero to four, on psychological and physical health. The closer they are to zero, the healthier they are overall. In order to fully understand how strong the correlation is, data from more participants and different demographics, including more males and religious sectors would be needed. Regardless, knowing that there is a correlation between these two factors can help generalize medical solutions towards both physical and mental health in future analyses and in the healthcare industry. 
+
+Further analysis of the data indicates that there is indeed a correlation between physical and psychological health severity. However, the strength of this correlation is somewhat limited by the relatively small sample size of 130 responses, compared to the intended 600. The majority of participants reported low severity scores on both psychological and physical health, with scores tending towards zero on a scale from zero to four, suggesting a generally healthy population. To gain a more accurate understanding of the correlation's strength, it would be beneficial to analyze data from a larger and more diverse sample, including a higher number of male respondents and individuals from various religious backgrounds. Despite these limitations, the identification of a correlation between physical and psychological health is valuable. It provides a foundation for future analyses and can inform more integrated approaches in medical solutions that address both physical and mental health within the healthcare industry.
 
 #### Spiritual vs. Religious - Health Effects
-Two of our variables assess the self-ranking of respondents on how religious and how spiritual they consider themselves to be. We used this as a benchmark to assess the "religiousness" and "spirituality" of respondents. As earlier defined, religion follows more of an institutionalized system of attitudes and beliefs, while spirituality defines an experience of connection to something larger than you. However, both are linked to positive coping mechanisms that bolster mental, and thus, physical health.
+
+Two variables in the dataset assess respondents' self-ratings of their religiousness and spirituality. These self-ratings serve as benchmarks for evaluating the "religiousness" and "spirituality" of participants. As previously defined, religion typically involves an institutionalized system of beliefs and practices, whereas spirituality is characterized by a personal sense of connection to something greater than oneself. Despite these distinctions, both dimensions are associated with positive coping mechanisms that can enhance mental health, which in turn may improve physical health.
 
 ##### Are Spiritual People Religious? Are Religious People Spiritual?
-In order to properly define the relationship between spirituality and health, we must first define how our respondents view these two ideas of faith, and how the survey respondents categorize themselves within the religious and spiritual spheres.
 
-```{r}
+To accurately define the relationship between spirituality and health, it is essential to first understand how respondents perceive these concepts and how they classify themselves within the religious and spiritual domains. This understanding provides a foundational context for analyzing how these self-perceptions relate to health outcomes.
+
+```{r, message=FALSE}
 ##religion vs. spiritual self-ranking
 camdata_clean %>%
   filter(!is.na(relpersn), !is.na(sprtprsn))%>%
@@ -250,37 +254,77 @@ camdata_clean %>%
     geom_smooth()+
     labs(x="Religious Self-Ranking", y="Spiritual Self-Ranking", title="The Relationship between Spirituality and Religiosity")
 ```
-Assessing the relationship between a respondent’s religious vs. spiritual self-ranking reveals no significant correlation between the two values. As discussed before, the majority of respondents categorize themselves as spiritual, but not many considered themselves religious. This marks an important distinction between religiousness and spirituality in the perspectives of our sample, perhaps highlighting the personal freedom of spirituality in the face of more structured religious practices. In order to determine what exactly differs between religious and spiritual practice would require further analysis into our respondents’ daily faith practices and activities. In general, there seems to be no statistical correlation between religious and spiritual self-ranking. “Very religious” people always ranked themselves spiritual, but results differed for “very spiritual” respondents. 
+
+The analysis of the relationship between respondents’ self-ratings of religiousness and spirituality indicates no significant correlation between these two dimensions. As previously noted, the majority of respondents identify as spiritual rather than religious. This distinction underscores a divergence between religiousness and spirituality within the sample, potentially reflecting the personal flexibility associated with spirituality compared to the more structured nature of religious practices.
+
+To fully understand the differences between religious and spiritual practices, further analysis is needed, particularly focusing on the daily faith practices and activities of respondents. Overall, the data reveals no statistical correlation between religious and spiritual self-ratings. While individuals who self-identified as "very religious" consistently also identified as spiritual, the same was not necessarily true for those who identified as "very spiritual."
 
 ##### Does Spirituality/Religiosity Predict Severity of Health Symptoms?  
-Having established the distinction between religiosity and spirituality, and having assessed the demographic self-ranking of our respondent’s religiousness and spirituality, we can now analyze the relationship between religiosity/spiritual vs. severity of health symptoms. 
+Having clarified the distinction between religiosity and spirituality and assessed the demographic self-rankings of respondents in these areas, the next step is to analyze the relationship between religiosity/spirituality and the severity of health symptoms.
 
-The severity of health symptoms, and in turn the health scores of respondents, are as follows:
-```{r}
-#overall health score
-camdata_clean %>%
-  summarize(med_health_total=median(health_total, na.rm=T),
-            avg_health_total=mean(health_total, na.rm=T))
-## The average overall health score is 0.93, and the median overall health score is 0.83.
-## The majority of respondents rate themselves as experiencing overall (physical and psychological) health symptoms between "Not at all" and "A little bit". 
-```
-```{r}
-#physical
-camdata_clean %>%
-  summarize(med_phys_health=median(physical_health, na.rm=T),
-            avg_phys_health=mean(physical_health, na.rm=T))
-## The average physical health score is 0.87, and the median physical health score is 0.67.
-```
-```{r}
-#psychological
-camdata_clean %>%
-  summarize(med_psych_health=median(psych_health, na.rm=T),
-            avg_psych_health=mean(psych_health, na.rm=T))
-## The average psychological health score is 0.99, and the median psychological health score is 0.67.
-```
-In summary, the average overall health severity score is 0.93, while the median overall health severity score is 0.83. The average was taken using the mean (the sum of all responses over the total number of responses), and the median was calculated by finding the midpoint of responses. The median physical and psychological health severity scores were the same at 0.67, but the average psychological score is higher than the average physical score. In general, the majority of respondents report low physical and psychological symptoms, averaging less than 1 on a scale from 0 to 4. Respondents tended to rate their psychological symptoms slightly more severe than their physical symptoms.  
+The severity of health symptoms, along with the corresponding health scores of respondents, is as follows:
 
-```{r}
+##### Overlall Health
+```{r, echo=FALSE}
+library(dplyr)
+library(knitr)
+
+# Summarize health data
+health_summary <- camdata_clean %>%
+  summarize(
+    med_health_total = median(health_total, na.rm = TRUE),
+    avg_health_total = mean(health_total, na.rm = TRUE)
+  )
+
+# Display table
+kable(health_summary)
+```
+
+The analysis of overall health scores reveals that the average score is 0.93, while the median score is 0.83. This indicates that most respondents have relatively low health symptom scores, with the majority reporting their overall (physical and psychological) health symptoms as falling between the categories of "Not at all" and "A little bit."
+
+The average score of 0.93 suggests that, on average, respondents experience mild symptoms. However, the median score of 0.83 is slightly lower, indicating that more than half of the respondents report experiencing even fewer symptoms. The concentration of responses in the lower end of the severity scale reflects a generally positive health status among the sample population. This distribution provides a baseline understanding of the respondents' health conditions, which is crucial for evaluating how religiosity and spirituality may correlate with their physical and psychological well-being.
+
+##### Physical Scores
+```{r, echo=FALSE}
+library(dplyr)
+library(knitr)
+
+# Summarize physical health data
+physical_health_summary <- camdata_clean %>%
+  summarize(
+    med_phys_health = median(physical_health, na.rm = TRUE),
+    avg_phys_health = mean(physical_health, na.rm = TRUE)
+  )
+
+# Display table
+kable(physical_health_summary)
+```
+
+The analysis of physical health scores shows an average score of 0.87 and a median score of 0.67. The average score of 0.87 indicates that, on average, respondents report mild to moderate physical health symptoms. In contrast, the median score of 0.67 suggests that more than half of the respondents experience even fewer symptoms, reflecting a generally lower severity of physical health issues for the majority of the sample. This discrepancy between the average and median scores highlights that while some respondents report relatively higher physical health symptoms, a significant portion experiences fewer or less severe symptoms. The lower median score demonstrates that the majority of respondents are closer to the lower end of the severity scale, suggesting a generally favorable physical health status within the sample. 
+
+##### Psychological Health Scores
+
+```{r, echo=FALSE}
+library(dplyr)
+library(knitr)
+
+# Summarize psychological health data
+psych_health_summary <- camdata_clean %>%
+  summarize(
+    med_psych_health = median(psych_health, na.rm = TRUE),
+    avg_psych_health = mean(psych_health, na.rm = TRUE)
+  )
+
+# Display table
+kable(psych_health_summary)
+```
+The analysis of psychological health scores reveals an average score of 0.99 and a median score of 0.67. The average score of 0.99 indicates that, on average, respondents report mild psychological symptoms. This average value provides insight into the general level of psychological distress experienced by the participants. In contrast, the median score of 0.67 suggests that more than half of the respondents experience psychological symptoms that are less severe than this midpoint value. The median represents the central point of the data, indicating that the majority of participants report relatively lower levels of psychological distress. The discrepancy between the average and median scores illustrates that while the average score is slightly higher, indicating some variability in symptom severity, the median score reflects that a significant portion of respondents experience minimal distress. This variation suggests that, overall, the psychological health of the respondents is favorable, with many experiencing lower levels of psychological symptoms.
+
+#### Health Severity Score Summary
+In summary, the average overall health severity score is 0.93, while the median overall health severity score is 0.83. The average score, calculated as the mean of all responses, reflects the general level of health severity reported by participants. The median score, determined as the midpoint of the ordered responses, indicates that 50% of respondents experience health symptoms below this value, highlighting a slightly lower severity for the majority. The median scores for both physical and psychological health are the same at 0.67, which suggests that half of the respondents report physical and psychological symptoms of similar severity. However, the average psychological health score is higher at 0.99 compared to the average physical health score of 0.87. This indicates that, on average, respondents report slightly more severe psychological symptoms than physical symptoms. Overall, most respondents report low levels of both physical and psychological symptoms, with scores averaging less than 1 on a scale from 0 to 4. This pattern shows that while the majority experience mild symptoms, psychological symptoms are rated as somewhat more severe than physical symptoms.
+
+##### Religious Self-Ranking and Health Severity
+```{r, warning=FALSE}
 ##religiosity vs health
 camdata_clean %>%
    filter(!is.na(relpersn))%>%
@@ -288,9 +332,10 @@ camdata_clean %>%
     geom_point(position="jitter")+
     labs(x="Religious Self-Ranking", y="Overall Health Score", title="Overall Health Score vs. Religious Self-Ranking")
 ```
-When assessing the relationship between religious self-ranking and overall health severity score, there doesn’t seem to be a slight relationship between the two. Those with higher overall health severity tended to be less religious, and those who ranked themselves “Very religious” did not exceed an overall health severity score of 2, meaning their symptoms on average affected them only “a little bit.” As observed in our analysis of the severity of health outcomes, the majority of respondents’ overall health severity score did not exceed 1. This is reflected in our graph, with the majority of points clustered at the bottom. A larger survey, preferably with more respondents with higher severity of health symptoms, is needed to conclusively define the relationship between religiousness and health. 
 
-```{r}
+An assessment of the relationship between religious self-ranking and overall health severity reveals no significant correlation. Individuals with higher overall health severity scores generally reported lower levels of religiosity. Specifically, those identifying as “Very religious” had overall health severity scores not exceeding 2, suggesting that their symptoms impacted their well-being only minimally. Data analysis indicates that the majority of respondents reported overall health severity scores below 1, as shown by the graph where most data points cluster at the lower end. To comprehensively understand the relationship between religiosity and health severity, a larger sample with a wider range of health severity levels is necessary.
+
+```{r, warning=FALSE}
 #spirituality vs health
 camdata_clean %>%
    filter(!is.na(sprtprsn))%>%
@@ -298,11 +343,13 @@ camdata_clean %>%
     geom_point(position="jitter")+
     labs(x="Spiritual Self-Ranking", y="Overall Health Score", title="Overall Health Score vs. Spiritual Self-Ranking")
 ```
-Compared to that of religion, there does not appear to be a relationship between personal spirituality and overall health severity. In the graph, we see our established trends of respondents ranking themselves highly spiritual, but having a lower overall health severity score less than 1. There is no observable trend in the level of spirituality of those who rated their overall health severity higher.
+
+In contrast to religiosity, no significant relationship is observed between personal spirituality and overall health severity. The data shows that respondents who rated themselves as highly spiritual generally reported lower overall health severity scores, with most scores below 1. The graph indicates that there is no discernible trend linking higher levels of spirituality with increased health severity.
 
 #### How Does Marital Status Affect Health Symptoms? 
-As we discussed previously, the marital status of an individual can reflect an individual's spiritual beliefs and practices, providing insight into a person's emotional and physical well-being. Married individuals tend to place more value on spiritual and religious beliefs, which in turn can strengthen marital bonds and introduce central values within couples. By assessing the relationship between marital status and health, we are given insight as to how one's emotional support system can predict health and well-being. 
-```{r}
+
+Marital status can significantly influence an individual's spiritual beliefs and practices, and thereby impact emotional and physical well-being. Marriage often reinforces spiritual and religious values, fostering emotional support and enhancing the quality of life. Understanding the relationship between marital status and health provides valuable insights into how the presence or absence of a supportive partner can affect overall health and well-being. Married individuals typically benefit from a robust emotional support system, which can contribute to better health outcomes by mitigating stress and providing a stable foundation for both physical and mental health. Conversely, those who are single, divorced, or widowed may experience different levels of support and thus face varying health challenges.By analyzing the relationship between marital status and health symptoms, it is possible to gain a deeper understanding of how personal relationships and emotional support systems influence health. This analysis helps in identifying how different marital statuses correlate with health symptoms, potentially guiding interventions and support strategies tailored to individuals' relational contexts.
+```{r, warning=FALSE}
 ##marital status vs health
 camdata_clean %>%
   ggplot(aes(x=mrtlstus, y=health_total, fill=mrtlstus))+
@@ -310,29 +357,47 @@ camdata_clean %>%
   scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+ 
   labs(x="Marital Status", y="Average Health Score", title="Average Health Score by Marital Status")
 ```
-Combining both physical and psychological health, marriage predicts a lower average health severity score with less severe health symptoms in survey respondents. Married individuals, compared to single and divorced respondents, had a median severity score of around 0.5 (between “Not at all” and “A little bit”), while single and divorced respondents both had a median score around 1 (at the “A little bit” range). Considering our previous analysis where the median overall health severity score was below 1, this result is quite notable. Single and divorced individuals rated their overall health worse than the average participant. Marital status, in this survey, can be used to predict the severity of the respondents ratings, as married individuals were more likely to rate their overall health symptoms less severe. A further analysis into the differences in rating between physical and psychological symptoms is warranted. 
+
+Combining both physical and psychological health metrics, marital status emerges as a significant predictor of overall health severity. Married respondents reported a notably lower average health severity score, reflecting less severe health symptoms compared to their single and divorced counterparts. Specifically, married individuals had a median severity score of approximately 0.5, which falls between the “Not at all” and “A little bit” ranges. In contrast, single and divorced respondents both reported median scores around 1, corresponding to the “A little bit” range. Given that the median overall health severity score for the entire sample was below 1, these findings are particularly striking. Single and divorced individuals rated their overall health more severely than the average participant, suggesting that marital status plays a crucial role in health outcomes. The data indicates that married individuals are more likely to report less severe health symptoms, which implies that marital status can be a useful predictor of health severity. Further analysis is needed to explore the differences in ratings between physical and psychological symptoms, to better understand how marital status influences various dimensions of health.
 
 ##### Marital Status and Health Symptoms - Physical vs. Psychological
-We've established that marital status predicts the severity of health symptoms, with married individuals scoring much lower in their average health severity score. However, the measurement we used, the "average health severity score," factors in all physical and psychological symptoms we previously selected – poor appetite, nausea, weakness, feeling others are to blame, feelings of loneliness, and feeling that something is wrong with one's mind. While marriage provides a significant emotional support system that might alleviate feelings of loneliness and blame, marriage is not directly linked to helping physical symptoms like nausea and weakness. Comparing how marital status predicts the severity of physical vs. psychological symptoms can provide insight into how the religious and spiritual aspects of marriage and partnership also impact health symptoms. 
 
-```{r}
+The analysis has demonstrated that marital status is a predictor of overall health severity, with married individuals consistently reporting lower average health severity scores compared to single and divorced respondents. This overall health severity score encompasses a range of symptoms, including poor appetite, nausea, weakness, feelings of blame, loneliness, and concerns about mental health. While marriage appears to significantly reduce the perception of psychological symptoms such as loneliness and feelings of blame—likely due to the emotional support provided by a marital partner—its impact on physical symptoms like nausea and weakness is less clear. The emotional and psychological benefits of marriage may not directly address physical health issues. To gain a comprehensive understanding of how marital status influences health, it is crucial to distinguish between the impacts on physical versus psychological symptoms. This comparison can shed light on how the religious and spiritual dimensions of marital relationships contribute to the management and experience of both physical and psychological health symptoms. Further analysis in this area will provide deeper insights into the multifaceted role of marital status in health outcomes.
+
+```{r, message=FALSE, warning=FALSE}
 ##marital status vs health (physical/psych)
+library(ggplot2)
+library(gridExtra)  # For ggarrange function
+
+# Plot for Physical Health vs Marital Status
 physvsmrtl <- camdata_clean %>%
-  ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus))+
-  geom_bar(stat="summary", fun="mean")+
-  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+
-  labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score by Marital Status")
+  ggplot(aes(x=mrtlstus, y=physical_health, fill=mrtlstus)) +
+  geom_bar(stat="summary", fun="mean", width=0.7) +  # Adjust bar width
+  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) +
+  labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotate x-axis labels
+        axis.title = element_text(size = 14),
+        plot.title = element_text(size = 16),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
 
+# Plot for Psychological Health vs Marital Status
 psychvsmrtl <- camdata_clean %>%
-  ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus))+
-  geom_bar(stat="summary", fun="mean")+
-  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3"))+
-  labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score by Marital Status")
+  ggplot(aes(x=mrtlstus, y=psych_health, fill=mrtlstus)) +
+  geom_bar(stat="summary", fun="mean", width=0.7) +  # Adjust bar width
+  scale_fill_manual(values = c("chartreuse3", "cornflowerblue", "brown", "aquamarine3")) +
+  labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Rotate x-axis labels
+        axis.title = element_text(size = 14),
+        plot.title = element_text(size = 16),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
 
-ggarrange(physvsmrtl, psychvsmrtl,
-          ncol=2, nrow=1)
+# Arrange plots side by side
+ggarrange(physvsmrtl, psychvsmrtl, ncol=2, nrow=1)
 ```
-The trends in physical and psychological health severity scores mirror the overall health severity scores, with married individuals generally reporting less severe health symptoms compared to single and divorced individuals. On average, respondents rated their psychological symptoms as more severe than their physical symptoms, a trend consistent across all marital status categories. However, marital status alone cannot predict psychological health over physical health or vice versa. This could be due to the strong correlation between physical and psychological health or the emotional support provided by marriage, which may alleviate both types of symptoms. Further research is needed to explore how spiritual and religious practices intersect with marital status and their combined effects on health outcomes.
+
+The patterns observed in physical and psychological health severity scores reflect the overall health severity trends, with married individuals consistently reporting less severe health symptoms compared to their single and divorced counterparts. On average, respondents indicated that their psychological symptoms were more severe than their physical symptoms, a trend that was consistent across all marital status categories. However, marital status alone does not predict whether psychological health is more significantly affected than physical health, or vice versa. This lack of distinct prediction may be attributed to the strong correlation between physical and psychological health, or the possibility that the emotional support offered by marriage mitigates both types of symptoms. To fully understand the interplay between marital status, spiritual and religious practices, and their combined effects on health outcomes, further research is necessary.
 
 ### Conclusion
 After narrowing the dataset down from 254 to 13 variables that describe the spiritual, religious and health-related factors among survey respondents, a few key takeaways have come to light. Comparing health symptoms amongst different demographics revealed that the majority of respondents reported low levels of both physical and psychological symptoms. Physical and psychological health are correlated, contrary to the current medical standard of treating disease over illness. This highlights the interconnected nature of overall health and how this concept of holistic treatment should be implemented into modern medicine. Additionally, there is no significant correlation between one’s level of religiosity and spirituality. Survey respondents tended to rank themselves as more spiritual and less religious. It remains important to consider the distinction between the two while implementing their practices in the process of healing. Neither religiosity nor spirituality seemed to demonstrate a significant impact on the health of the respondents. However, they can positively influence overall health through development of coping techniques and emotional support. Married individuals reported better health outcomes compared to single or divorced individuals, suggesting that emotional and social support in marriage helps reduce health symptoms. Considering the interplay between marriage and religious/spiritual practice, this finding supports the idea that demonstrating faith can contribute to alleviating the symptoms of chronically ill patients. It is clear that social factors that affect an individual’s mental strength can play a larger role in physical health than expected. 
