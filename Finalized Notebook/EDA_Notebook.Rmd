@@ -11,9 +11,11 @@ library(tidyverse)
 ```
 
 ### Introduction & Motivation
-The CAM and Spirituality, Religiosity dataset, sourced from the Association of Religion Data Archives (ARDA), examines the impact of spirituality on health among chronically ill patients from a private medical clinic in Southampton, UK. This dataset encompasses various dimensions of spirituality, including spiritual and meditative practices, personal values, spiritual coping strategies, and religious support. Additionally, it explores health measures related to mindfulness and overall coping when facing health challenges. In the context of modern medicine, which predominantly employs Western techniques, there is a growing need to consider the contrasting spiritual approaches found in alternative medicine. The integration of spirituality into healthcare is often overlooked in contemporary medical practices. This dataset aims to investigate whether specific spiritual practices or beliefs correlate with enhanced mental and physical health, reduced stress levels, or improved coping mechanisms. The insights derived from this dataset are highly relevant for healthcare professionals and therapists seeking  alternative treatment methods and strategies outside normative medical practices. The findings could inform holistic healthcare policies that integrate spirituality into patient care, influence educational programs on self-care in public schools, reshape treatment strategies for severely injured patients, and enhance mental health approaches in workplace settings. By acknowledging the role of spirituality in overall well-being, this research has the potential to shape more inclusive and comprehensive healthcare practices. 
+In the context of modern medicine, which predominantly employs Western techniques, there is a growing need to consider the contrasting spiritual approaches found in alternative medicine. The integration of spirituality into healthcare is often overlooked in contemporary medical practices. This dataset aims to investigate whether specific spiritual practices or beliefs correlate with enhanced mental and physical health, reduced stress levels, or improved coping mechanisms. The insights derived from this dataset are highly relevant for healthcare professionals and therapists seeking  alternative treatment methods and strategies outside normative medical practices. The findings could inform holistic healthcare policies that integrate spirituality into patient care, influence educational programs on self-care in public schools, reshape treatment strategies for severely injured patients, and enhance mental health approaches in workplace settings. By acknowledging the role of spirituality in overall well-being, this research has the potential to shape more inclusive and comprehensive healthcare practices. 
 
 ### Dataset Collection Methodology: Survey Questionaire
+The CAM and Spirituality, Religiosity dataset, sourced from the Association of Religion Data Archives (ARDA), examines the impact of spirituality on health among chronically ill patients from a private medical clinic in Southampton, UK. This dataset encompasses various dimensions of spirituality, including spiritual and meditative practices, personal values, spiritual coping strategies, and religious support. Additionally, it explores health measures related to mindfulness and overall coping when facing health challenges. 
+
 The principal investigators Niko Kohls, Harald Walach, and George Lewish sent out their questionnaires to a randomized population of patients who met the following three criteria: undergone treatment within a 3 year mark, older than the the age of 18, and had a diagnosis of either migraines, irritable bowel, or chronic fatigue syndrome. The respondents consisted of 71 cases with chronic fatigue (65%), 29 (27%) individuals with an irritable bowel syndrome as well as 9 (8%) patients suffering from migraines, totaling to 130 respondents.
 
 Six hundred questionnaires were originally mailed to the patients. With a response rate of 18.5%, 111 questionnaires were successfully completed. The survey questions focused on the impact of patients' spirituality and their overall physical health. The spiritual topics range from spiritual experiences, personal values, to private religious practices and more. As for the health topics, these range from mindfulness practices to current health issues. The final dataset consisted of 258 total variables, from 254 initially, and 130 respondents for a better understanding of the subject matter. For this project’s more focused analysis, the variable count has been reduced to 13 variables. By concentrating on the factors that would best describe a sample and their relationship with religion/spiritual practices, a more direct approach towards understanding the correlation between spirituality and health was developed. 
@@ -113,6 +115,8 @@ save(camdata_clean, file = "/Users/marielamendez-pimentel/Documents/EDA Notebook
 ```
 
 ### Getting to Know the Participants
+Before analyzing the data within this survey, we must first familiarize ourselve with the respondents. This will give us insight into the demographic of our sample and whether our results can be generalized to the entire population. We focus on three different demographic categories: gender, marital status, and religious denomination.
+
 #### Gender Disparity
 ```{r}
 library(ggplot2)
@@ -231,7 +235,7 @@ Before delving into the relationship between spirituality and health, it is esse
 ##physical vs psychological health
 ggplot(camdata_clean, aes(x=physical_health, y=psych_health))+
   geom_point(position="jitter")+
-  geom_smooth(color="blue4")+
+  geom_smooth(method = 'lm', color="blue4")+
   labs(x="Physical Health Score", y="Psychological Health Score", title="Psychological vs. Physical Health in Survey Responses")
 ```
 
@@ -396,8 +400,36 @@ psychvsmrtl <- camdata_clean %>%
 # Arrange plots side by side
 ggarrange(physvsmrtl, psychvsmrtl, ncol=2, nrow=1)
 ```
-
 The patterns observed in physical and psychological health severity scores reflect the overall health severity trends, with married individuals consistently reporting less severe health symptoms compared to their single and divorced counterparts. On average, respondents indicated that their psychological symptoms were more severe than their physical symptoms, a trend that was consistent across all marital status categories. However, marital status alone does not predict whether psychological health is more significantly affected than physical health, or vice versa. This lack of distinct prediction may be attributed to the strong correlation between physical and psychological health, or the possibility that the emotional support offered by marriage mitigates both types of symptoms. To fully understand the interplay between marital status, spiritual and religious practices, and their combined effects on health outcomes, further research is necessary.
+
+#### Examples of Religious/Spiritual Practice: Private Pray
+Recognizing the personalized nature of spiritual care, we seek to define and provide specific examples of religious and spiritual care that improve patient outcomes to implement into healthcare and patient treatments. One such example is implementing instances of private pray into one's daily routine, specifically for those who already define as religious. Private pray can help create a space for self-examination and confession for individuals honestly express their challenges and their hopes. Studies have shown that frequent private prayer is linked to significant benefits for mental health issues. We aim to examine the relationship between frequency of private pray and psychological health within this study. 
+
+```{r}
+install.packages("paletteer")
+library(paletteer)
+
+camdata_clean %>%
+  filter(!is.na(prvtpry),
+         relpersn==3 | relpersn==4) %>%
+  group_by(prvtpry) %>%
+  summarize(psychhealth_avg=mean(psych_health)) %>%
+  ggplot(aes(x=prvtpry, y=psychhealth_avg, fill=prvtpry))+
+    geom_col()+
+    scale_fill_paletteer_d("MexBrewer::Frida")+
+    labs(x="Frequency of Private Pray", y="Psychological Health Score", title="Private Pray In Relation to Psychological Health", fill="Private Pray Frequency")+
+  theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
+        axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
+        axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
+        axis.text.x.bottom = element_text(
+          family = "serif", size = 11,
+          angle = 40, hjust = 0.9),
+        axis.text.y = element_text(family = "serif", size = 11),
+        legend.title = element_text(family = "serif", size = 12),
+        legend.text = element_text(family = "serif", size = 9))
+  
+```
+For sampled individuals who identify as religious, an increased frequency of private pray predicts better mental health. Compared to individuals who never pray or pray less than once a month, those who seek a connection with God through prayer weekly or daily tend to rate their psychological health lower, indicating lower feelings of loneliness and helplessness. This suggests that private prayer might serve as a practical application to be investigated within the context of healthcare. If trained properly, physicians and other providers provide expertise on spiritual and religious care in order to help patients navigate mental health concerns within the context of disease and illness. Additionally, a deeper examination as to why private pray is advantageous to mental health might provide insight into applications for non-religious pateints. 
 
 ### Conclusion
 After narrowing the dataset down from 254 to 13 variables that describe the spiritual, religious and health-related factors among survey respondents, a few key takeaways have come to light. Comparing health symptoms amongst different demographics revealed that the majority of respondents reported low levels of both physical and psychological symptoms. Physical and psychological health are correlated, contrary to the current medical standard of treating disease over illness. This highlights the interconnected nature of overall health and how this concept of holistic treatment should be implemented into modern medicine. Additionally, there is no significant correlation between one’s level of religiosity and spirituality. Survey respondents tended to rank themselves as more spiritual and less religious. It remains important to consider the distinction between the two while implementing their practices in the process of healing. Neither religiosity nor spirituality seemed to demonstrate a significant impact on the health of the respondents. However, they can positively influence overall health through development of coping techniques and emotional support. Married individuals reported better health outcomes compared to single or divorced individuals, suggesting that emotional and social support in marriage helps reduce health symptoms. Considering the interplay between marriage and religious/spiritual practice, this finding supports the idea that demonstrating faith can contribute to alleviating the symptoms of chronically ill patients. It is clear that social factors that affect an individual’s mental strength can play a larger role in physical health than expected. 
