@@ -388,7 +388,7 @@ physvsmrtl <- camdata_clean %>%
                outlier.shape = NA)+
     geom_jitter(width = 0.25, show.legend=F, size=1)+
     scale_fill_manual(values = c("skyblue", "cornflowerblue", "dodgerblue3", "lavender"))+
-   labs(x="Marital Status", y="Overall Health Score", title="Overall Health Score by Marital Status")+
+   labs(x="Marital Status", y="Physical Health Score", title="Physical Health Score by Marital Status")+
     theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
         axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
         axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
@@ -403,7 +403,7 @@ psychvsmrtl <- camdata_clean %>%
                outlier.shape = NA)+
     geom_jitter(width = 0.25, show.legend=F, size=1)+
     scale_fill_manual(values = c("skyblue", "cornflowerblue", "dodgerblue3", "lavender"))+
-   labs(x="Marital Status", y="Overall Health Score", title="Overall Health Score by Marital Status")+
+   labs(x="Marital Status", y="Psychological Health Score", title="Psychological Health Score by Marital Status")+
     theme(plot.title = element_text(family = "serif", size = 16, face = "bold"),
         axis.title.x = element_text(family = "serif", size = 13, face = "italic"),
         axis.title.y = element_text(family = "serif", size = 13, face = "italic"),
