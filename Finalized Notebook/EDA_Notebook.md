@@ -550,6 +550,12 @@ interplay between marital status, spiritual and religious practices, and
 their combined effects on health outcomes, further research is
 necessary.
 
+#### Examples of Religious/Spiritual Practice: Private Pray
+Recognizing the personalized nature of spiritual care, we seek to define and provide specific examples of religious and spiritual care that improve patient outcomes to implement into healthcare and patient treatments. One such example is implementing instances of private pray into one's daily routine, specifically for those who already define as religious. Private pray can help create a space for self-examination and confession for individuals honestly express their challenges and their hopes. Studies have shown that frequent private prayer is linked to significant benefits for mental health issues. We aim to examine the relationship between frequency of private pray and psychological health within this study. 
+
+
+For sampled individuals who identify as religious, an increased frequency of private pray predicts better mental health. Compared to individuals who never pray or pray less than once a month, those who seek a connection with God through prayer weekly or daily tend to rate their psychological health lower, indicating lower feelings of loneliness and helplessness. This suggests that private prayer might serve as a practical application to be investigated within the context of healthcare. If trained properly, physicians and other providers provide expertise on spiritual and religious care in order to help patients navigate mental health concerns within the context of disease and illness. Additionally, a deeper examination as to why private pray is advantageous to mental health might provide insight into applications for non-religious pateints. 
+
 ### Conclusion
 
 After narrowing the dataset down from 254 to 13 variables that describe
