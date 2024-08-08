@@ -5,6 +5,22 @@ Mariela Mendez, Hannah Huang
 
 ### Introduction & Motivation
 
+In the context of modern medicine, which predominantly employs Western techniques, 
+there is a growing need to consider the contrasting spiritual approaches found in 
+alternative medicine. The integration of spirituality into healthcare is often overlooked 
+in contemporary medical practices. This dataset aims to investigate whether specific 
+spiritual practices or beliefs correlate with enhanced mental and physical health, 
+reduced stress levels, or improved coping mechanisms. The insights derived from this 
+dataset are highly relevant for healthcare professionals and therapists seeking alternative 
+treatment methods and strategies outside normative medical practices. The findings could 
+inform holistic healthcare policies that integrate spirituality into patient care, influence 
+educational programs on self-care in public schools, reshape treatment strategies for severely 
+injured patients, and enhance mental health approaches in workplace settings. By acknowledging 
+the role of spirituality in overall well-being, this research has the potential to shape more
+inclusive and comprehensive healthcare practices. 
+
+### Dataset Collection Methodology: Survey Questionaire
+
 The CAM and Spirituality, Religiosity dataset, sourced from the
 Association of Religion Data Archives (ARDA), examines the impact of
 spirituality on health among chronically ill patients from a private
@@ -30,8 +46,6 @@ enhance mental health approaches in workplace settings. By acknowledging
 the role of spirituality in overall well-being, this research has the
 potential to shape more inclusive and comprehensive healthcare
 practices.
-
-### Dataset Collection Methodology: Survey Questionaire
 
 The principal investigators Niko Kohls, Harald Walach, and George Lewish
 sent out their questionnaires to a randomized population of patients who
